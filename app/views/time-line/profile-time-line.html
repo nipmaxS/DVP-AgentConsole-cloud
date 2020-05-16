@@ -1,0 +1,70 @@
+<div class="timelline-wrapper prn2-time-line-wrap">
+
+    <div ng-show="engagementsList.length==0" class="data-not-found" style="">
+        - DATA NOT FOUND -
+    </div>
+
+    <ul class="timeline " scrolly="showMore()">
+        <li ng-repeat="eng in engagementsList"
+            ng-class="{'timeline-inverted':eng.direction=='outbound' }">
+            <div class="timeline-badge"
+                 ng-class="{'api-channel':eng.channel=='api',
+                  'twitter-channel':eng.channel=='twitter',
+                  'call-channel':eng.channel=='call',
+                  'facebook-channel':eng.channel=='facebook-post',
+                  'twitter-channel':eng.channel=='skype',
+                  'sms-channel':eng.channel=='sms',
+                  'email-channel':eng.channel=='email'}">
+                <i class=""
+                   ng-class="{'fa fa-random':eng.channel=='api',
+                  'fa fa-twitter':eng.channel=='twitter',
+                   'fa fa-facebook':eng.channel=='facebook-post',
+                  'main-icon-2-telephone-3':eng.channel=='call',
+                  'fa fa-skype':eng.channel=='skype',
+                  'fa fa-bell-o':eng.channel=='sms',
+                  'fa fa-envelope-o':eng.channel=='email'}"></i>
+            </div>
+            <div class="timeline-panel">
+                <div class="timeline-heading ">
+
+                    <ul class="info-list">
+                        <li>
+                            <small>From</small>
+                            <h5 class="font-color-yellow">{{eng.channel_from}}</h5>
+                        </li>
+                        <li>
+                            <small>To</small>
+                            <h5 class="font-color-yellow">{{eng.channel_to}}</h5>
+                        </li>
+                    </ul>
+                </div>
+                <div class="timeline-body bottom-line ">
+                    <p>direction : {{eng.direction}}</p>
+                </div>
+                <div ng-if="eng.body" class="timeline-body bottom-line ">
+                    <p> {{eng.body}}</p>
+                </div>
+                <div class="timeline-body">
+                    <p ng-repeat="note in eng.notes">
+                        <i class="fa fa-check-circle-o"></i>
+                        {{note.body}} -> {{note.author}}
+                    </p>
+                </div>
+
+                <div class="timeline-heading">
+                    <p>
+                        <small class="text-muted font-color-green"><i class="fa fa-clock-o"></i>
+                            <time-ago from-time='{{eng.created_at}}' format='MM/dd/yyyy'></time-ago>
+                            via
+                            {{eng.channel}}
+                        </small>
+                    </p>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div ng-show="engagementsList.length!=0" class="load-more-wrapper" style="margin-top: -11px;">
+        <h5 ng-show="!isShowTimeLine" ng-click="showMore();"> Load More</h5>
+        <h5 ng-show="isShowTimeLine"><i class="fa fa-spinner fa-spin"></i></h5>
+    </div>
+</div>

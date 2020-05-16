@@ -1,0 +1,144 @@
+<!-- Edit profile -->
+<div class="user-p-edit-wrapper-052017 animated " style="top: 39px;"
+     ng-class="isShowBasicLocationInfoEditModal==true ?'fadeIn':'display-none'">
+    <div class="user-edit-wrapper">
+        <!-- subject -->
+        <form name="newProfileForm">
+            <!-- P.O box -->
+            <div class="col-lg-12">
+                <div class="form-group " ng-class="{ 'validation-on-052017': newProfileForm.no.$invalid &&
+                         newProfileForm.no.$dirty }" >
+                    <label for="no" class="label-052017">P.O. Box / Building No</label>
+                    <label for="no" class="label-052017" ng-show="userAccessFields.address.require">*</label>
+                    <input type="text" class="form-control txt-input-052017" name="no"
+                           placeholder=""
+                           ng-model="newProfile.address.number"
+                           ng-required="userAccessFields.address.require"
+                           ng-disabled="userAccessFields && !userAccessFields.address.editable"
+                           >
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group" ng-class="{ 'validation-on-052017': newProfileForm.street1.$invalid &&
+                         newProfileForm.street1.$dirty }">
+                    <label for="street1"
+                           class="label-052017">
+                        Street
+                    </label><label for="street1"
+                                   class="label-052017" ng-show="userAccessFields.address.require">
+                    *
+                </label>
+                    <input type="text"
+                           class="form-control txt-input-052017"
+                           name="street1"
+                           ng-model="newProfile.address.street"
+                           ng-required="userAccessFields.address.require"
+                           ng-disabled="userAccessFields && !userAccessFields.address.editable">
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group" ng-class="{ 'validation-on-052017': newProfileForm.City.$invalid &&
+                         newProfileForm.City.$dirty }">
+                    <label for="City"
+                           class="label-052017">
+                        City
+                    </label><label for="City"
+                                   class="label-052017" ng-show="userAccessFields.address.require">
+                    *
+                </label>
+                    <input type="text"
+                           class="form-control txt-input-052017"
+                           name="City"
+                           ng-model="newProfile.address.city"
+                           ng-required="userAccessFields.address.require"
+                           ng-disabled="userAccessFields && !userAccessFields.address.editable">
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group" ng-class="{ 'validation-on-052017': newProfileForm.province.$invalid &&
+                         newProfileForm.province.$dirty }">
+                    <label for="province"
+                           class="label-052017">
+                        Province
+                    </label><label for="province"
+                                   class="label-052017" ng-show="userAccessFields.address.require">
+                    *
+                </label>
+                    <input type="text"
+                           class="form-control txt-input-052017"
+                           name="province"
+                           ng-model="newProfile.address.province"
+                           ng-required="userAccessFields.address.require"
+                           ng-disabled="userAccessFields && !userAccessFields.address.editable">
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group" ng-class="{ 'validation-on-052017': newProfileForm.country.$invalid &&
+                         newProfileForm.country.$dirty }">
+                    <label for="province"
+                           class="label-052017">
+                        Country
+                    </label>
+                    <label for="province"
+                           class="label-052017" ng-show="userAccessFields.address.require">
+                        *
+                    </label>
+                    <select class="select2_single form-control txt-input-052017"
+
+                            aria-hidden="true" id="country"
+                            name="country"
+                            ng-model="newProfile.address.country"
+                            ng-required="userAccessFields.address.require"
+                            ng-disabled="userAccessFields && !userAccessFields.address.editable">
+                        <option ng-repeat="country in countryList"
+                                value="{{country.name}}">
+                            {{country.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group" ng-class="{ 'validation-on-052017': newProfileForm.zipcode.$invalid &&
+                         newProfileForm.zipcode.$dirty }">
+                    <label for="province"
+                           class="label-052017">
+                        Zip Code
+                    </label>
+                    <label for="province"
+                           class="label-052017"  ng-show="userAccessFields.address.require">
+                        *
+                    </label>
+                    <input type="text"
+                           class="form-control txt-input-052017"
+                           name="zipcode"
+                           ng-model="newProfile.address.zipcode"
+                           ng-required="userAccessFields.address.require"
+                           ng-disabled="userAccessFields && !userAccessFields.address.editable">
+                </div>
+            </div>
+
+
+            <div class="col-lg-12">
+                <div class="form-group" style="margin-top: 5px;">
+                    <button ng-if="!isUpdateingProfile"
+                            class="btn btn-lg btn-block btn-save-052017"
+                            ng-disabled="newProfileForm.$invalid"
+                            ng-click="UpdateExternalUser(newProfile);">
+                        UPDATE
+                    </button>
+                    <button ng-if="isUpdateingProfile"
+                            class="btn btn-lg btn-block btn-save-052017"
+                            disabled>
+                        PLEASE WAIT...
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>

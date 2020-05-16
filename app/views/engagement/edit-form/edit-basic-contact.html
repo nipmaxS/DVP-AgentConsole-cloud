@@ -1,0 +1,85 @@
+<div class="user-p-edit-wrapper-052017 animated"
+     ng-class="isBasicContactView==true ?'fadeIn':'display-none'">
+    <div class="user-edit-wrapper">
+        <!-- subject -->
+        <form name="newProfileForm" novalidate>
+            <div class="col-lg-12">
+                <div class="form-group"
+                     ng-class="{ 'validation-on-052017': newProfileForm.newPhone.$invalid &&
+                         newProfileForm.newPhone.$dirty }">
+                    <label class="label-052017"
+                           for="newPhone">
+                        PHONE NO
+                    </label><label class="label-052017"
+                           for="newPhone" ng-show="userAccessFields.primary_contacts.require">
+                       *
+                    </label>
+                    <input type="text"
+                           class="form-control txt-input-052017"
+                           name="newPhone"
+                           ng-model="newProfile.phone"
+                           ng-required="userAccessFields.birthday.require"
+                           name="newPhone"
+                           ng-disabled="userAccessFields && !userAccessFields.primary_contacts.editable">
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group"  ng-class="{ 'validation-on-052017': newProfileForm.newLandNo.$invalid &&
+                         newProfileForm.newLandNo.$dirty }">
+                    <label class="label-052017"
+                           for="newLandNo">
+                        LAND NO
+                    </label><label class="label-052017"
+                           for="newLandNo" ng-show="userAccessFields.secondary_contacts.require">
+                       *
+                    </label>
+                    <input type="text"
+                           class="form-control txt-input-052017"
+                           name="newLandNo"
+                           ng-model="newProfile.landnumber"
+                           name="newLandNo"
+                           ng-disabled="userAccessFields && !userAccessFields.secondary_contacts.editable"
+                    ng-required="userAccessFields.secondary_contacts.require">
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group" ng-class="{'validation-on-052017': newProfileForm.newEmail.$invalid &&
+                         newProfileForm.newEmail.$dirty }">
+                    <label class="label-052017"
+                           for="newEmail" >
+                        EMAIL
+                    </label>
+                    <label class="label-052017"
+                           for="newEmail" ng-show="userAccessFields.email.require">
+                        *
+                    </label>
+                    <input type="email"
+                           class="form-control txt-input-052017"
+                           name="newEmail"
+                           ng-model="newProfile.email"
+                           ng-required="userAccessFields.email.require"
+                           name="newEmail"
+                           ng-disabled="userAccessFields && !userAccessFields.email.editable">
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group" style="margin-top: 20px;">
+                    <button ng-if="!isUpdateingProfile"
+                            class="btn btn-lg btn-block btn-save-052017"
+                            ng-disabled="newProfileForm.$invalid"
+                            ng-click="UpdateExternalUser(newProfile);">
+                        UPDATE
+                    </button>
+                    <button ng-if="isUpdateingProfile"
+                            class="btn btn-lg btn-block btn-save-052017"
+                            disabled>
+                        PLEASE WAIT...
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

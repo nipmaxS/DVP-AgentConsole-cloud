@@ -1,0 +1,200 @@
+<div id="ticketFilterWrap" ng-controller="ticketFilterCtrl" class="ticket-filter-wrapper animated fadeIn">
+    <div class="ticket-filter-wrap">
+
+        <!-- MODEL HEADER -->
+        <div class="model-header">
+            <div class="col-md-6">
+                <div class="mode-left-icon   float-left">
+                    <i class="veery-font-1-diamond"></i>
+                </div>
+                <div class="model-header-text bold p-top-10">
+                    Ticket Filters
+                </div>
+            </div>
+
+            <!--<div class="col-md-6 col-sm-6 ">
+                <div class="model-btn-wrapper">
+                    <div class="btn-warp ">
+                        <span class="btn btn-default btn-close" id="closeTicket">close</span>
+                    </div>
+
+                </div>
+            </div>-->
+        </div>
+        <!-- MODEL HEADER -->
+
+        <div class="row">
+            <div class="col-md-4">
+
+                <!-- create  new filter -->
+                <!--<div ng-include="'app/views/ticket/filter/ticket-filter.html'"></div>-->
+                <!-- end -->
+
+                <div class="ticket-filter-view">
+                    <div id="ticketFilterHeader" class="header">
+                        <div class=" bold pull-left">
+                            VIEWS -
+                            <small class="color-grey500">total {{views.length}}</small>
+                        </div>
+                        <div class="pull-right">
+                            <div class="fa fa-refresh cursor-pointer" ng-click="loadTicketViews()">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ticket-filter-body">
+                        <div class="filter-view" ng-class="view.class" id="{{view._id}}"
+                             ng-click="clickViewsDetails(view)"
+                             ng-repeat="view in views">
+                            <div class="pull-left color-green500">
+                                {{view.title}}
+                            </div>
+                            <div class="pull-right bold">
+                                {{view.count}}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="ticket-filter-view">
+                    <div class="header bold text-uppercase">
+                        Your unsolved tickets
+                    </div>
+                    <div class="profile-ticket-wrapper  ng-scope">
+                        <div ng-show="isProgress">
+                            <div class="row ">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="data-state-wrap loading-note">
+                                        <svg class="spinner-container" width="65px" height="65px" viewBox="0 0 52 52">
+                                            <circle class="path" cx="26px" cy="26px" r="20px" fill="none"
+                                                    stroke-width="4px"/>
+                                        </svg>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div ng-show="isNoData">
+                            <div class="row ">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="data-state-wrap my-note-emety">
+                                        No Data
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="profile-ticket-wrapper" ng-repeat="ticket in ticketList">
+
+
+                            <div class="profile-ticker-wrap "
+                                 ng-class="{'high-boarder':ticket.priority=='high',
+                        'normal-boarder':ticket.priority=='normal',
+                        'low-boarder':ticket.priority=='low',
+                        'urgent-boarder':ticket.priority=='urgent'}">
+                                <div class="ticket-channel call"
+                                     ng-class="{'api-channel':ticket.channel=='api',
+                  'twitter-channel':ticket.channel=='twitter',
+                  'call-channel':ticket.channel=='call',
+                  'facebook-channel':ticket.channel=='facebook-post',
+                  'voicemail-channel':ticket.channel=='voicemail',
+                  'sms-channel':ticket.channel=='sms',
+                  'email-channel':ticket.channel=='email'}">
+                                    <i class=""
+                                       ng-class="{'fa fa-random':ticket.channel=='api',
+                  'fa fa-twitter':ticket.channel=='twitter',
+                   'fa fa-facebook':ticket.channel=='facebook-post',
+                  'fa fa-phone':ticket.channel=='call',
+                  'fa fa-bookmark-o':ticket.channel=='new',
+                  'fa fa-volume-control-phone':ticket.channel=='voicemail',
+                  'fa fa-bell-o':ticket.channel=='sms',
+                  'fa fa-envelope-o':ticket.channel=='email'}"></i>
+                                </div>
+
+                                <div class="right-ticket-details">
+                                    <div class="col-md-12 p-0">
+                                        <div class="col-md-2 p-0">
+                                            <div class="left-avatar">
+                                                <img class="object-fit_cover" src="assets/img/avatar/default-user.png"
+                                                     ng-src="{{ticket.requester.avatar}}">
+
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 ">
+                                            <div class="ticker-id bold" ng-click="viewSpecificTicket(ticket)">
+                                                {{ticket.reference}} - {{ticket.channel}}
+                                                <small class="color-cyan500 text-uppercase">
+                                                    <time-ago from-time='{{ ticket.created_at }}'
+                                                              format='MM/dd/yyyy'></time-ago>
+                                                </small>
+
+                                            </div>
+                                            <div class="ticket-subj bold">
+                                                {{ticket.type}}
+                                                <small ng-class="{'high':ticket.priority=='high',
+                        'normal':ticket.priority=='normal','low':ticket.priority=='low','urgent':ticket.priority=='urgent'}">
+                                                    {{ticket.priority}}
+                                                </small>
+                                            </div>
+                                            <div class="ticket-desc">
+                                                <div class="pull-left">
+                                                    <div class="ticket-desc">
+                                                        {{ ticket.description | limitTo: 60 }}{{ticket.description.length > 60 ? '...' : ''}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="row">
+                                                <ul class="info-list-lg ticket-details-list pull-left">
+                                                    <li>
+                                                        <small>OWNER</small>
+                                                        <h5>{{ticket.submitter.displayname}}</h5>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="row">
+                                                <ul class="info-list-lg ticket-details-list pull-left">
+                                                    <li>
+                                                        <small>USER</small>
+                                                        <h5>{{ticket.requester.displayname}}</h5>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <paging ng-show="showPaging"
+                                class="small"
+                                page="currentPage"
+                                page-size="pageSize"
+                                total="pageTotal"
+                                show-prev-next="true"
+                                show-first-last="true"
+                                text-next-class="fa fa-angle-right"
+                                text-prev-class="fa fa-angle-left"
+                                text-first-class="fa fa-angle-double-left"
+                                text-last-class="fa fa-angle-double-right"
+                                paging-action="getPageData('Paging Clicked', page, pageSize, total)">
+                        </paging>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

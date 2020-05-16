@@ -1,0 +1,88 @@
+ul.nav-tabs > li.active > a {
+    border-top: solid 3px #428bca !important;
+}
+
+div.scrollable {
+    position: relative;
+}
+
+div.scrollable:before, div.scrollable:after {
+    background: #ffffff;
+    border: solid 1px #ffffff;
+    border-radius: 4px 4px 0 0;
+    cursor: pointer;
+    font-weight: bold;
+    line-height: 42px;
+    height: 42px;
+    padding: 0 7px;
+    position: absolute;
+    z-index: 1;
+}
+
+div.scrollable:before {
+    content: '<';
+}
+
+div.scrollable:after {
+    content: '>';
+    right: 0;
+    top: 0;
+}
+
+div.scrollable > ul.nav-tabs {
+    overflow: hidden;
+    padding-left: 28px;
+    white-space: nowrap;
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    background: #fff;
+}
+
+div.scrollable > ul.nav-tabs > li {
+    display: inline-block;
+    float: none;
+}
+
+div.scrollable > ul.nav-tabs > li:last-child {
+    margin-right: 26px;
+}
+
+div.scrollable > .tab-content > .tab-pane {
+    padding: 5px;
+}
+
+div.scrollable.nav > li > a:focus, .nav > li > a:hover {
+    text-decoration: none;
+    background-color: transparent;
+    color: #36ba45;
+}
+
+div.scrollable.nav-tabs > li > a:hover {
+    border-color: transparent;
+}
+
+.nav-tabs > li > a:hover {
+    border-color: transparent !important;
+}
+
+.btn-tab-close.active, .btn-tab-close:active {
+    background-image: none;
+    outline: none !important;
+    -webkit-box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0);
+    box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0);
+}
+
+.btn-tab-close > span:hover {
+    color: #36ba45;
+}
+
+.nav > li > a:focus, .nav > li > a:hover {
+    text-decoration: none;
+    background-color: transparent !important;
+}
+
+.console-main-tab > a {
+    color: #0d1c34 !important;
+}

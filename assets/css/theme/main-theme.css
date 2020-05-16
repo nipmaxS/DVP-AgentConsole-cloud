@@ -1,0 +1,322 @@
+
+.console-nav-bar {
+    /*background: #0d1c34;*/
+    background: #223448;
+    position: fixed;
+    width: 100%;
+    right: 0;
+    z-index: 1000;
+}
+
+.console-navbar-brand {
+    color: #8298ae !important;
+}
+
+.bg-transparent {
+    background: transparent !important;
+}
+
+.border-radius-20 {
+    border-radius: 20px;
+}
+
+.dropdown-menu .divider {
+    background-color: #dfdfdf;
+}
+
+.console-drop-menu > li > a.drop-header {
+    color: #8298ae !important;
+}
+
+.console-drop-menu > li > a {
+    color: #8298ae;
+}
+
+.dropdown-menu > li > a {
+    font-family: "AvenirNextLTPro-Regular", Courier, monospace;
+}
+
+.dropdown-menu > li > a:focus,
+.dropdown-menu > li > a:hover {
+    background-color: #c3c0bb;
+    color: #908E8D !important;
+}
+
+.drop-desc-small {
+    font-family: "AvenirNextLTPro-Regular", Courier, monospace;
+    color: #bdbdbd;
+    padding-left: 20px;
+}
+
+.dropdown-menu.console-drop-menu > li > a:focus,
+.dropdown-menu.console-drop-menu > li > a:hover {
+    background-color: #f3f3f3 !important;
+    color: #908E8D !important;
+    border-radius: 5px;
+}
+
+.dropdown-menu.console-drop-menu {
+    padding-bottom: 15px;
+    padding-top: 10px;
+}
+
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:focus, .dropdown-menu > .active > a:hover {
+    color: #908E8D;
+    text-decoration: none;
+    background-color: #F2F4F8;
+    outline: 0;
+}
+
+.menuitem-with-icon > a > i {
+    color: #14d0a0;
+}
+
+/* notification */
+.notification-icon {
+    background: #17373c;
+}
+
+.notification-icon.user-list {
+    background: transparent;
+}
+
+.notification-list:hover {
+     background: #f7f5f5;
+ }
+
+/*.notification-icon.inbox {*/
+/*background: #c7d1da;*/
+/*}*/
+
+.notification-time {
+    color: #d2c242;
+}
+
+.notification-icon > i {
+    color: #36BA45;
+}
+
+.online {
+    background: #4cd460;
+}
+
+.offline {
+    background: #9f9f9f;
+}
+
+.online-text {
+    text-transform: uppercase;
+    color: #36ba45;
+}
+
+.offline-text {
+    text-transform: uppercase;
+    color: #d2c242;
+}
+
+.ticket-details.todo {
+    border-top: 4px solid #d2c242;
+}
+
+.ticket-details.in-progress {
+    border-top: 4px solid #8298ae;
+}
+
+.ticket-details.done {
+    border-top: 4px solid #14d0a0;
+}
+
+.color-orange {
+    color: #ff8c00 !important;
+}
+
+.color-red {
+    color: #ff0c06 !important;
+}
+
+.bg-orange {
+    background: #ff8c00;
+}
+
+.facebook {
+    background: #3b5998 !important;
+}
+
+.twitter {
+    background: #00aced !important;
+}
+
+.notification {
+    background: #14d0a0 !important;
+}
+
+.timeline .timeline-icon a.test2 {
+    background: #45bf55;
+}
+
+.font-color-green {
+    color: #45bf55 !important;
+}
+
+.font-color-yellow {
+    color: #d2c242 !important;
+}
+
+.font-color-blue900 {
+    color: #0d1c33 !important;
+}
+
+.font-color-gray500 {
+    color: #8298ae !important;
+}
+
+.label-green {
+    color: #45bf55 !important;
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+}
+
+.new-ticker {
+    border-top: 3px solid #d2c242;
+}
+
+.done-ticker {
+    border-top: 3px solid #14d0a0;
+}
+
+.ticket-channel.call {
+    background: #fff;
+    -webkit-box-shadow: -1px 0px 23px -7px rgba(0, 0, 0, 0.66);
+    -moz-box-shadow: -1px 0px 23px -7px rgba(0, 0, 0, 0.66);
+    box-shadow: -1px 0px 23px -7px rgba(0, 0, 0, 0.66);
+}
+
+.font-CyanA200 {
+    color: #14d0a0;
+}
+
+.btn-green100 {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    background: #45bf55;
+    border-radius: 0px;
+    border-color: #45bf55;
+    color: #ffffff;
+}
+
+.btn-green-op {
+    background: rgba(54, 186, 69, 0.10);
+    color: #36ba45;
+    outline: hidden !important;
+}
+
+.btn-red-0p {
+    background: rgba(217, 0, 0, 0.10);
+    color: #d90000;
+    outline: hidden !important;
+}
+
+.btn-green500 {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    background: #168039;
+    border-radius: 0px;
+    border-color: #168039;
+    color: #ffffff;
+}
+
+.btn-green700 {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    background: #044d29;
+    border-radius: 0px;
+    border-color: #044d29;
+    color: #ffffff;
+}
+
+.btn-red600 {
+    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+    background: #d90000;
+    border-radius: 0px;
+    border-color: #d90000;
+    color: #ffffff;
+}
+
+.text-color-red {
+    color: #d90000;
+}
+
+.font-white {
+    color: #ffffff !important;
+}
+
+.bg-green500 {
+    background: #168039 !important;
+}
+
+.btn-green700 {
+    background: #044d29 !important;;
+}
+
+.bg-color-Teal900 {
+    background: #17373c !important;
+}
+
+.bg-color-Teal600 {
+    background: #2b4d52 !important;
+}
+
+.bg-color-Teal700 {
+    background: #2b4d52 !important;
+}
+
+.bg-color-UserTags {
+    background: #45bf55 !important;
+}
+
+.bg-color-Teal800 {
+    background: #1a3d42 !important;
+}
+
+.prn2 > .progress > .progress-bar-warning {
+    background: #45bf55;
+}
+
+.prn2 > .progress > .progress-bar-success {
+    background: #168039;
+}
+
+.prn2 > .progress > .progress-bar-danger {
+    background: #4f9300;
+}
+
+/*validation */
+.validation-on {
+    color: #d90000;
+}
+
+.color-fb {
+    color: #3b5998 !important;;
+}
+
+.color-twitter {
+    color: #55acee !important;;
+}
+
+.color-linkedin {
+    color: #0077B5 !important;;
+}
+
+.color-skype {
+    color: #00aff0 !important;;
+}
+
+.color-google {
+    color: #d34836 !important;;
+}
+
+.table > thead > tr > th {
+    border: 0px;
+}
+
+/*update check box stytle{
+/* .slideTwo */
+
+/* end .slideTwo */
+

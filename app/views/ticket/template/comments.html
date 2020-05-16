@@ -1,0 +1,145 @@
+<div class="row">
+    <div class="comment-add-wrapper">
+        <span class="" ng-click="showNewComment()"
+              ng-show="!isNewComment">
+             Comment</span>
+    </div>
+    <div class="comment-wrapper" ng-show="isNewComment">
+        <div class="col-lg-12">
+            <form>
+                <div class="new-note-wrapper ">
+
+
+                    <textarea id="ticket_comment" class="form-control" rows="3" ng-model="newComment"></textarea>
+                    <div style="height:10px"></div>
+
+                    <div class="row">
+                        <div class="col-md-4 nopadding" style="margin-top: 8px;">
+                            <select class="form-control " placeholder=""
+                                    ng-model="messageMode">
+                                <option>public</option>
+                                <option>private</option>
+                                <option>internal</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="height:10px"></div>
+                    <input id="commentUploader" type="file" nv-file-select="" onchange="" uploader="uploader" multiple/>
+                    <span ng-show="isUploading">Uploading ............</span>
+                    <div style="height:10px"></div>
+                    <div ng-repeat="currUploads in uploadedComAttchments">
+
+                        <span style="padding-right: 10px"><a href="" ng-click="playAttachment(currUploads)">{{currUploads.file}}</a></span><i
+                            class="fa fa-close" ng-click="deleteAttachment(currUploads._id)"> </i>
+
+                    </div>
+
+                    <div class="btn-warp inline-btn  p-top-6 ">
+                    <span class="btn  btn-default btn-block "
+                          ng-click="addComment(newComment,this.messageMode)"
+                          ng-disabled="!isCommentCompleted">Add</span>
+                    </div>
+                    <div class="btn-warp inline-btn  p-top-6 ">
+                        <span class="btn  btn-default btn-close btn-block " ng-click="cancelNewComment()">cancel</span>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<div ng-show="isPlay" class="videogular-container audio">
+
+    <videogular vg-auto-play="true" vg-player-ready="onPlayerReady($API)" vg-complete="onPlayerComplete($API);">
+        <vg-media vg-src="config.sources"
+                  vg-tracks="config.tracks"
+                  vg-native-controls="true" vg-type="audio">
+        </vg-media>
+    </videogular>
+    <i class="main-icon-2-cancel" ng-click="closePlayer()"> </i>
+</div>
+
+<div class="row" ng-repeat="comment in ticket.comments">
+    <div class="ticket-comment-wrapper">
+        <div class="col-lg-12 nopadding">
+            <div class="row">
+                <div class="pull-left commenter-img">
+                    <img src="assets/img/avatar/default-user.png"
+                         ng-src="{{comment.author_avatar}}"
+                         ng-mouseover="getAgentSummaryTooltip(comment.author_displayname,
+                                                         comment.author_avatar,
+                                                         comment.author.name,
+                                                         comment.author._id)"
+                         class="cursor-pointer"/>
+                    <small class="comment-author">{{comment.author_displayname}} |</small>
+                    <small class="sub-note" ng-show="comment.public=='public'">replied</small>
+                    <small class="sub-note" ng-show="comment.public=='private'">noted</small>
+                    <small class="sub-note" ng-show="comment.public=='internal'">commented</small>
+
+                </div>
+
+                <div class="pull-right">
+                    <small>
+                        <time-ago from-time='{{ comment.created_at }}'></time-ago>
+                    </small>
+                    <div class="row" ng-show="comment.engagement_session && comment.public=='public'">
+                        <small class="pull-right">Delivered</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div ng-show="!checkAttachmentAvailability(comment)">
+                    Attachments unavailable
+                </div>
+                <div ng-show="checkAttachmentAvailability(comment)" style="padding-top: 5px">
+                    {{comment.body}}
+                </div>
+            </div>
+
+            <div class="row">
+                
+            </div>
+
+            <div class="row">
+                <div ng-if="comment.attachments.length>0">
+                    <div style="height: 10px;"></div>
+                    <div ng-repeat="com_attch in comment.attachments">
+
+                        <a href="" ng-click="playAttachment(com_attch)">{{com_attch.file}}</a>
+
+                    </div>
+                </div>
+            </div>
+            <div ng-show="comment.channel==='call'">
+                <a href="javascript:void(0);"><i class="fa fa-play"
+                                                 ng-click="playFile(comment.engagement_session._id)">Play</i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div class="row">
+    <div class="ticket-comment-wrapper">
+        <div class="col-lg-12" style="padding-left: 40px; padding-right: 40px;">
+            <div class="row">
+                <div class="pull-left commenter-img">
+                    <img src="assets/img/avatar/oykun.jpg"/>
+                    <small class="bold color-green500">JACKSON WHITE</small>
+                    <small>add a comment</small>
+
+                </div>
+                <div class="pull-right">
+                    <small>3 days ago</small>
+                </div>
+            </div>
+            <div class="row">
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                industry's standard dummy text ever since the 1500s,
+            </div>
+        </div>
+    </div>
+</div>-->
+

@@ -1,0 +1,1238 @@
+<div id="main" main-scroll ng-controller="consoleCtrl">
+
+
+    <nav id="navBar" class="navbar navbar-default console-nav-bar">
+
+        <div class="container-fluid">
+            <div class="col-lg-12 col-md-12">
+
+                <div id="desktop_menu">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header" style="margin-left: -20px">
+                        <a class="navbar-brand console-navbar-brand top-log-052017" href="#">
+                            <div class="version-name">
+                                {{version}}
+                            </div>
+                            <img src="assets/img/logo_130x130_white.png">
+                        </a>
+                    </div>
+                    <form class="form-inline navbar-form navbar-left" id="mainSearchBar">
+                        <div class="form-group has-feedback">
+                            <div class="main-search-input">
+                                <i class="fa fa-search"></i>
+                                <input id="commonSearch" type="text" autocomplete="true"
+                                       class="has-feedback-right"
+                                       ng-model="searchText"
+                                       typeahead-min-length="0" typeahead-on-select="bindSearchData($item)"
+                                       uib-typeahead="state as state.value for state in commonSearch($viewValue)"
+                                       placeholder="Search by keyword, #ticket or #profile" typeahead-no-results="noResults"
+                                       typeahead-loading="isLoading">
+                            </div>
+
+                            <!--<span class="fa fa-spinner fa-spin  form-control-feedback left" style="margin-top: 8px; color: white; padding-left: 2px" aria-hidden="true"></span>-->
+                            <span id="searchSpin" class="fa fa-cog fa-spin"
+                                  style="color: #EE437E ;position: absolute;top: 5px;right: 10px;"></span>
+                            <div ng-show="noResults" class="search-no-result-box">
+                                <i class="ti-face-sad animated slideInDown"></i>
+                                <span> No Results Found </span>
+                            </div>
+
+                            <!-- <div class="form-group">
+                                 <input id="commonSearch" type="text" class="main-search-input" ng-model="searchText"
+                                        typeahead-min-length="0" typeahead-select-on-exact="true" typeahead-focus-on-select="false" typeahead-on-select="bindSearchData($item)" ng-keydown="commonSearch($event)"
+                                        uib-typeahead="state.value for state in states" placeholder="Search by keyword, #ticker or #profile">
+                             </div>-->
+
+                        </div>
+                    </form>
+
+                    <ul class="nav navbar-nav navbar-right " id="headerTopMenu" uib-dropdown>
+                        <!-- registration icon -->
+                        <li class="console-menu-icon m-left-10 m-right-10 m-top-6"
+                            uib-dropdown
+                            uib-dropdown-toggle>
+                            <i class="icon-d-f-icon-register small" title="Tasks"></i>
+                            <div id="regStatusNone" class="task-state task-none"></div>
+                            <!--<div id="regStatusDone" class="task-state regStatusDone display-none"></div>-->
+
+                            <ul class="dropdown-menu console-drop-menu notification-menu-right"
+                                uib-dropdown-menu
+                                role="menu">
+                                <li>
+                                    <a class="drop-header">Tasks</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li ng-repeat="obj in resourceTaskObj" class="menuitem text-lowercase" srole="menuitem">
+                                    <a
+                                            ng-class="obj.task==obj.RegTask ?'active-font':'top-drop-text'"
+                                            ng-click="changeRegisterStatus.changeStatus(obj.task);"
+                                            href="javascript:void(0);" style="overflow: auto">
+                                        <span style="float: left">{{obj.task}}</span>
+                                        <div class="drop-active-icon">
+                                            <i class="ti-check" ng-class="obj.task==obj.RegTask ?'active':''"></i>
+                                        </div>
+
+                                    </a></li>
+                            </ul>
+                        </li>
+                        <!--<div class="playPause-btn" hotkey="{space: showAlerttest}"></div>-->
+                        <!--ng-show="obj.task==obj.RegTask"-->
+
+
+                        <!-- mode icon -->
+                        <li class="console-menu-icon m-left-10 m-right-10 m-top-6" uib-dropdown
+                            uib-dropdown-toggle>
+                            <i ng-show="currentModeOption!='Inbound' &&
+                        currentModeOption!='Outbound'"
+                               class="icon-d-f-icon-mode small"
+                               title="Modes"></i>
+                            <img ng-show="currentModeOption=='Inbound'" class="small"
+                                 title="Inbound"
+                                 src="assets/img/180x180/inbound180x180.png" style="width: 25px;">
+                            <img ng-show="currentModeOption=='Outbound'" class="small"
+                                 title="outbound"
+                                 src="assets/img/180x180/outbound180x180.png" style="width: 25px;">
+
+                            <!--<div id="modeStatus" class="task-state task-none"></div>-->
+
+                            <ul class="dropdown-menu console-drop-menu notification-menu-right"
+                                uib-dropdown-menu
+                                role="menu">
+                                <li><a class="drop-header">Modes</a></li>
+                                <li class="divider"></li>
+                                <li class="menuitem" role="menuitem">
+                                    <a id="Inbound"
+                                       ng-class="currentModeOption=='Inbound' ?'active-font':'top-drop-text'"
+                                       ng-click="modeOption.inboundOption('Inbound');"
+                                       href="javascript:void(0);" title="Inbound [Alt+I]" style="overflow: auto">
+                                        <span style="float: left">Inbound</span>
+                                        <div class="drop-active-icon">
+                                            <i class="ti-check"
+                                               ng-class="currentModeOption=='Inbound' ?'active':'deactivate'"></i>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="menuitem" role="menuitem">
+                                    <a id="Outbound"
+                                       ng-class="currentModeOption=='Outbound' ?'active-font':'top-drop-text'"
+                                       ng-click="modeOption.outboundOption('Outbound');"
+                                       href="javascript:void(0);" title="Outbound [Alt+O]" style="overflow: auto">
+                                        <span style="float: left">Outbound</span>
+                                        <div class="drop-active-icon">
+                                            <i class="ti-check"
+                                               ng-class="currentModeOption=='Outbound' ?'active':'deactivate'"></i>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- break icon -->
+                        <li class="console-menu-icon m-left-10 m-right-10 m-top-6"
+                            style="padding-top: 6px;
+"
+                            uib-dropdown
+                            uib-dropdown-toggle>
+                            <i class="icon icon-d-f-icon-break small" style="font-size: 23px;"
+                               title="Break Types"></i>
+
+                            <ul class="dropdown-menu console-drop-menu notification-menu-right"
+                                uib-dropdown-menu
+                                role="menu">
+                                <li><a class="drop-header">Break types</a></li>
+                                <li class="divider"></li>
+                                <li class="menuitem" role="menuitem" ng-repeat="breakType in dynamicBreakTypes"><a
+                                        id="breakType.BreakType"
+                                        class=""
+                                        ng-click="breakOption.changeBreakOption(breakType.BreakType);"
+                                        href="javascript:void(0);">
+                                    {{breakType.BreakType}}
+                                    <!--<div class="drop-active-icon">-->
+                                    <!--<i class="ti-check"-->
+                                    <!--ng-class="currentBerekOption==breakType.BreakType ?'active':''"></i>-->
+                                    <!--</div>-->
+                                </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <!-- Invitation icon -->
+                        <li class="console-menu-icon m-left-10 m-right-10 m-top-6"
+                            id="invitationAlarm"
+                            uib-dropdown
+                            uib-dropdown-toggle>
+                            <!-- notification icon -->
+
+                            <i id="regInvites" class="fa fa-rocket"
+                               ng-class="isSocketRegistered==false?'notification-error':'notification-success'"
+                               title="Invitations" style="font-size: 22px;padding-top: 1px;"></i>
+
+                            <div id=" invitationStatus"
+                                 ng-show="pendingInviteCnt!=0"
+                                 ng-class="{'task-incoming':pendingInviteCnt!=0}"
+                                 class="task-state task-none notification-count">
+                                {{pendingInviteCnt}}
+                            </div>
+
+                            <ul class="dropdown-menu console-drop-menu notification-menu-right notification-widget  "
+                                uib-dropdown-menu
+                                role="menu">
+                                <li class="notification-header">
+                                    <a class="drop-header">Invitations</a>
+                                    <span class="drop-sub-header">new ({{pendingInviteCnt}})</span>
+                                </li>
+                                <li class="divider"></li>
+                                <div class="console-notofication-wrapper">
+                                    <div class="notification-status" ng-show="pendingInviteCnt==0">
+
+                                        <i class="animated   fa fa-cog fa-3x"> </i>
+                                        </br>
+                                        No New Invitations
+                                    </div>
+
+                                    <section slimscroll="{height: '300px',
+                                    railVisible: true,
+                                    color: '#B6B8B5',
+                                    size: '8px',
+                                    distance: '10px',
+                                    railColor: '#B6B8B5',
+                                    railBorderRadius: 10}">
+
+                                        <div class="notification-list" ng-repeat="invite in pendingInvites"
+                                             ng-click="showNotificationMessage(invite)">
+                                            <div class="notify-img-small">
+                                                <img src="assets/img/avatar/profileAvatar.png"
+                                                     ng-src="{{invite.avatar}}">
+                                            </div>
+
+                                            <div class="noti-detail">
+                                                <div class="noti-detail">
+
+                                                    <label style="font-size: 15px">Invitation from {{invite.from}}</label>
+
+                                                    <div>
+                                                        <time-ago from-time='{{invite.created_at}}'
+                                                                  format='MM/dd/yyyy'></time-ago>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+
+                                <div ng-show="pendingInvites.length>0" id="delBtn" class=" del-all-btn"><span
+                                        onmouseover="this.style.cursor='pointer'"
+                                        ng-click="RemoveAllNotifications()">Delete All</span>
+                                </div>
+
+                            </ul>
+                        </li>
+
+
+
+
+                        <!-- notification icon -->
+                        <li class="console-menu-icon m-left-10 m-right-10 m-top-6"
+                            id="notificationAlarm"
+                            uib-dropdown
+                            uib-dropdown-toggle>
+                            <!-- notification icon -->
+
+                            <i id="regNotification" class="icon icon-d-f-icon-notification small"
+
+                               title="Notification Center" style="font-size: 22px;padding-top: 1px;"></i>
+
+                            <div id="notifConnectivityError"
+                                 ng-show="true"
+                                 class="task-state task-none notification-count display-none">
+                            </div>
+                            <div id="notificationStatus"
+                                 ng-show="unredNotifications!=0"
+                                 ng-class="{'task-incoming':unredNotifications!=0}"
+                                 class="task-state task-none notification-count">
+                                {{unredNotifications}}
+                            </div>
+
+                            <ul class="dropdown-menu console-drop-menu notification-menu-right notification-widget  "
+                                uib-dropdown-menu
+                                role="menu">
+                                <li class="notification-header">
+                                    <a class="drop-header">Notification
+                                        center</a>
+                                    <span class="drop-sub-header">new ({{unredNotifications}})</span>
+                                </li>
+                                <li class="divider"></li>
+                                <div class="console-notofication-wrapper">
+                                    <div class="notification-status" ng-show="unredNotifications==0">
+
+                                        <i class="animated   veery-font-1-alarm"> </i>
+                                        </br>
+                                        No New Notification
+                                    </div>
+
+                                    <section slimscroll="{height: '300px',
+                                    railVisible: true,
+                                    color: '#B6B8B5',
+                                    size: '8px',
+                                    distance: '10px',
+                                    railColor: '#B6B8B5',
+                                    railBorderRadius: 10}">
+
+                                        <div class="notification-list" ng-repeat="notifi in notifications"
+                                             ng-click="showNotificationMessage(notifi)">
+                                            <div class="notify-img-small">
+                                                <img src="assets/img/avatar/profileAvatar.png"
+                                                     ng-src="{{notifi.avatar}}">
+                                            </div>
+                                            <div class="noti-detail">
+                                                <div class="noti-detail">
+                                                    <h5>{{notifi.from}}</h5>
+                                                    <h4>{{notifi.header | limitTo: 20}}{{notifi.header.length>20
+                                                        ?'....':''}}</h4>
+
+                                                    <div>
+                                                        <time-ago from-time='{{notifi.time}}'
+                                                                  format='MM/dd/yyyy'></time-ago>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+
+                                <div ng-show="notifications.length>0" id="delBtn" class=" del-all-btn"><span
+                                        onmouseover="this.style.cursor='pointer'"
+                                        ng-click="RemoveAllNotifications()">Delete All</span>
+                                </div>
+
+                            </ul>
+                        </li>
+
+                        <!-- chat toggle icon -->
+                        <li class="console-menu-icon m-left-10 m-right-10 m-top-6">
+                            <i ng-class="isUserListOpen==true?'active-this':''"
+                               class="icon icon-d-f-icon-chat small"
+                               style="font-size: 22px;"
+                               ng-click="openNav()" title="Conversations"></i>
+                            <div ng-click="openNav()" id="chatStatus" ng-class="{'task-incoming':user_chat_counts!=0}"
+                                 class="task-state task-none">{{user_chat_counts}}
+                            </div>
+                        </li>
+                        <li id="headerAgentName">
+                            <h5 class="agent-login-name">
+                        <li style="padding-bottom: 5px">
+                            Hi,{{firstName}}
+                        </li>
+                        <li class="agent-company-name">
+                            Welcome to {{companyName}}
+                        </li>
+                        </h5>
+
+                        </li>
+                        <li uib-dropdown
+                            uib-dropdown-toggle>
+                            <div id="consoleProfileImg"
+                                 class="console-profile-img cursor-pointer"
+                                 uib-dropdown-toggle>
+                                <img src="assets/img/avatar/default-user.png" ng-src="{{loginAvatar}}">
+
+                                <div id="userStatus" class="user-state online"></div>
+                            </div>
+                            <ul class="dropdown-menu console-drop-menu notification-menu-right"
+                                uib-dropdown-menu
+                                role="menu">
+                                <li class="menuitem" role="menuitem">
+                                    <a ng-click="addTabProfileSetting();"
+                                       href="javascript:void(0);">
+                                        My Setting
+                                    </a>
+                                </li>
+                                <li class="menuitem" role="menuitem">
+                                    <a ng-click="show_windows_phone_list();"
+                                       href="javascript:void(0);">
+                                        Facetone Phones
+                                    </a>
+                                </li>
+                                <li class="menuitem" role="menuitem">
+                                    <a ng-click="logOut();"
+                                       href="javascript:void(0);">
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!--<div class="mobile-version-message">-->
+                    <!--mobile version coming soon.-->
+                    <!--</div>-->
+                </div>
+
+                <!-- mobile menu -->
+                <div id="mobile-menu">
+                    <div class="col-lg-3 col-xs-3">
+                        <div class="navbar-header">
+                            <a class="navbar-brand console-navbar-brand top-log-052017" href="#">
+                                <div class="version-name">
+                                    v 2.3
+                                </div>
+                                <img src="assets/img/logo/logo300x100.png">
+                            </a>
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-9 col-xs-9">
+                        <div class="mobile-menu pull-right">
+                            <div class="console-menu-icon m-left-10 m-right-10 m-top-6">
+                                <i class="ti-menu" title="Menu"></i>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <!-- /.col-12 -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <!--Triggers when '#new-main-btn' is clicked-->
+    <div id="new-main-panel" class="new-main-panel" ng-show="newPanelVisible">
+        <ul class="new-main-panel-list">
+            <li class="-list-item" ng-click="createNewProfile()" ng-show="accessNavigation.AGENT_NEWPROFILE" >New Profile</li>
+            <li class="-list-item" ng-click="createNewInternalTicket()" ng-show="accessNavigation.AGENT_TICKETINBOX">New Internal Ticket</li>
+        </ul>
+    </div>
+    <!--.-->
+
+    <div class="left-menu-wrapper052017">
+        <div id="windowHeightLeftMenu" slimscroll="{height: '{{windowHeight}}',
+            railVisible: true,
+            color: '#B6B8B5',
+            size: '6px',
+            distance: '4px',
+            railColor: '#fff',
+            railBorderRadius: 5}">
+            <ul>
+                <!-- create new profile -->
+                <li id="new-main-btn" ng-click="toggleNewMainPanle()" style="padding-top: 50px;" ng-class="{'clear-rad':newPanelVisible}" ng-show="accessNavigation.AGENT_NEWPROFILE || accessNavigation.AGENT_TICKETINBOX">
+                    <div class="left-icon animated slideInLeft">
+
+                        <img class="bg"
+                             tabindex="0"
+                             title="New Profile [Ctrl+Alt+P]"
+                             src="assets/img/180x180/profile-create180x180.png"
+                             width="40px">
+
+                        <div style="color: #2c3e50; width: 30px; height: 30px"></div>
+                    </div>
+                </li>
+
+
+                <!-- go to home -->
+                <li ng-class="activeTab.viewType == 'dashboard'?'selected-tab':''" ng-show="accessNavigation.AGENT_AGENT_DASHBOARD">
+
+                    <div class="left-icon animated slideInLeft">
+                        <i ng-click="addDashBoard();"
+                           class="icon icon-d-f-icon-home small-icon" title="Dashboard [Ctrl+Alt+D]"></i>
+                    </div>
+                </li>
+
+                <li ng-class="'selected-tab'" ng-show="accessNavigation.AGENT_ENGAGEMENTSESSION">
+
+                    <div class="left-icon animated slideInLeft">
+                        <i ng-click="loadEngagementSession();"
+                           class="icon fa fa-assistive-listening-systems small-icon" title="Pull Engagement"></i>
+                        <!--<i class="fa fa-assistive-listening-systems"></i>-->
+                    </div>
+                </li>
+
+
+
+                <!-- softphone -->
+                <li id="agentPhone" ng-show="accessNavigation.AGENT_SOFTPHONE">
+                    <div class="left-icon animated slideInLeft">
+                        <i id="phoneRegister"
+                           ng-click="consoleTopMenu.Register()"
+                           class="icon icon-d-f-icon-softphone small-icon offline-phone"
+                           title="Phone [Ctrl+Alt+X]"></i>
+                        <i style="font-size: 23px;margin-bottom: 10px" id="isLoadingRegPhone"
+                           class="fa fa-cog fa-spin small-icon display-none"
+                           title="Phone"></i>
+                        <img id="phoneStrategyIcon" ng-click="consoleTopMenu.Register()" class="display-none" src="" style="width: 26px" />
+                        <div id="isCallOnline" ng-click="consoleTopMenu.Register()" class="icon-status left-menu offline animated slideInUp"></div>
+                        <div id="isBtnReg" ng-click="consoleTopMenu.Register()"
+                             class="icon-status left-menu online display-none animated slideInUp"></div>
+                    </div>
+                </li>
+
+                <!-- dialer -->
+                <li id="agentDialerTop" class="display-none" ng-show="accessNavigation.AGENT_SOFTPHONE_DIALER">
+                    <div class="left-icon animated slideInLeft">
+                        <i ng-click="consoleTopMenu.openAgentDialer()"
+                           title="Agent Dialer "
+                           class="icon icon-d-f-icon-dialer small-icon offline-phone"></i>
+                    </div>
+                </li>
+
+                <!--call log-->
+                <li id="call_logs" style="padding-top: 4px" class="display-none" ng-show="accessNavigation.AGENT_CONTACT_LIST">
+                    <div class="left-icon animated slideInLeft">
+                        <i ng-click="show_contact_list();"
+                           title="Contact List"
+                           class="icon veery-font-1-user small-icon "></i>
+                    </div>
+                </li>
+
+                <!-- my note --->
+                <li ng-class="activeTab.viewType == 'MyNote'?'selected-tab':''" ng-show="accessNavigation.AGENT_NOTES">
+                    <div class="left-icon animated slideInLeft">
+                        <i ng-click="addMyNote();"
+                           class="icon-d-f-icon-mynote small-icon offline-phone" title="My Note [Ctrl+Alt+N]"></i>
+                    </div>
+                </li>
+                <!-- ticket inbox -->
+                <li ng-show="accessNavigation.AGENT_TICKETINBOX">
+                    <div class="left-icon animated slideInLeft">
+                        <i ng-click="addNewTicketInboxTemp()"
+                           class="icon-d-f-icon-ticketinbox small-icon offline-phone"
+                           title="Ticket Inbox [Ctrl+Alt+T]"></i>
+                    </div>
+                </li>
+                <!--<li ng-class="activeTab.viewType == 'filter'?'selected-tab':''">-->
+                <!--<div class="left-icon animated slideInLeft">-->
+                <!--<i ng-click="addNewTicketInboxTemp();"-->
+                <!--class="ti-filter small-icon offline-phone" title="Ticket Filter"></i>-->
+
+                <!--</div>-->
+                <!--</li>-->
+                <li ng-show="accessNavigation.AGENT_TIMETRACKER">
+                    <!-- deactivate mode -->
+                    <div ng-show="!timerTick">
+
+                        <div id="openTimer" class="left-icon animated slideInLeft">
+                            <i ng-click="showTimer()"
+                               class="icon-d-f-icon-tracker small-icon offline-phone"
+                               title="Ticket Tracker [Ctrl+Alt+W]"></i>
+                        </div>
+                    </div>
+
+                    <div ng-show="timerTick">
+                        <div class="left-icon animated slideInLeft ">
+                            <div class="loading-clock cursor-pointer"
+                                 ng-click="showTimer();" title="Ticket Tracker [Ctrl+Alt+W]">
+                            </div>
+
+                        </div>
+                    </div>
+                </li>
+                <li ng-show="accessNavigation.KNOWLEDGE_PORTAL">
+                    <div class="left-icon animated slideInLeft">
+                        <i ng-click="openKnowladgePortal()"
+                           class="icon fa fa-book small-icon offline-phone"
+                           title="Knowledge Portal [Ctrl+Alt+K]"></i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- timer widget -->
+    <div ng-show="showTimerWidget"
+         class="timer-wrapper052017">
+        <div class="t-ticket-details">
+            <ul>
+                <li>
+                    <div ng-if="!status.active" class="t-ticket-id">
+                        Ticket not found
+                    </div>
+                </li>
+                <li>
+                    <div class="t-ticket-id  cursor-pointer ticket-link"
+                         ng-if="status.active" ng-click="openTimerTicket()">
+                        {{ttimer.ticketRef}}
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="t-action">
+            <ul>
+                <li>
+                    <div class="t-timer-count" id="clock-timer">
+                        <timer autostart="false" interval="1000"
+                               ng-show="ttimer.active"
+                               start-time="ttimer.startTime">{{hhours}}:
+                            {{mminutes}}: {{sseconds}}
+                        </timer>
+
+                        <div ng-show="!ttimer.active">
+                            00:00:00
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="timer-action-menu">
+                        <ul class="customer-style-ul">
+                            <li>
+                                <div id="pauseActive" class="timer-pause active"
+                                     ng-click="pauseTime()"
+                                     data-toggle="tooltip"
+                                     data-placement="top"
+                                     title="Pause tracker">
+                                    <i class="fa fa-pause"></i>
+                                </div>
+                                <div id="pauseDisable"
+                                     class="timer-pause disable display-none">
+                                    <i class="fa fa-pause"></i>
+                                </div>
+                            </li>
+                            <li>
+                                <div id="startActive"
+                                     class="run-timer active"
+                                     ng-click="startTracker()"
+                                     data-toggle="tooltip"
+                                     data-placement="top"
+                                     title="Start tracker">
+                                    <i class="fa fa-play"></i>
+                                </div>
+                                <div id="startDisable"
+                                     class="run-timer disable display-none">
+                                    <i class="fa fa-play"></i>
+                                </div>
+                            </li>
+                            <li>
+                                <div id="stopActive"
+                                     ng-click="stopTime()"
+                                     class="timer-stop active"
+                                     data-toggle="tooltip"
+                                     data-placement="top"
+                                     title="Stop tracker">
+                                    <i class="fa fa-stop"></i>
+                                </div>
+                                <div id="stopDisable"
+                                     class="timer-stop disable display-none">
+                                    <i class="fa fa-stop"></i>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+ <!--   <script type="text/ng-template" id="popover">
+        <div ng-include="'app/views/ui-components/agent-summary.html'"></div>
+    </script>-->
+
+
+    <!-- My note notification --->
+    <div ng-include="'app/views/myNote/temp/my-note-noti-me.html'"></div>
+
+    <!-- New call notification UI update -1652017-->
+    <div ng-hide="isRegistor" ng-include="'app/views/ui-components/call-notification-panel.html'"></div>
+
+
+    <div ng-include="'app/veeryPhone/view/call-notification-panel.html'"></div>
+
+    <!-- New preview notification UI update -1652017-->
+    <!--<div ng-include="'app/views/ui-components/preview-notification-panel.html'"></div>-->
+
+    <!-- preview notification UI -->
+    <div ng-include="'app/views/ui-components/preview-panel.html'"></div>
+
+
+    <!-- view ticket -->
+    <div ng-include="'app/views/ticket/ticket-inbox.html'"></div>
+
+    <!-- right side navigation -->
+    <div ng-include="'app/views/right-side-nav.html'"></div>
+
+    <!-- My note notification --->
+
+
+
+    <script type="text/ng-template" id="popover">
+        <div ng-include="'app/views/ui-components/agent-summary.html'"></div>
+    </script>
+
+    <div class="console-def-img" ng-if="tabs.length==0">
+        <img src="assets/img/defulat-console-400x400.png" width="300">
+        <!---->
+    </div>
+
+
+    <div class="console-tab-wrapper" ng-show="tabs.length!=0">
+        <!--ng-class="{'fix-console-tab':isFiexedTab==true,
+                                         '':isFiexedTab==false}" -->
+        <!--div ng-include="'app/views/console-tab-panel.html'"></div-->
+        <scrollable-tabset class="fix-console-tab"
+                           api="scrlTabsApi"
+                           tooltip-left-placement="top"
+                           id="consoleMainTab">
+            <uib-tabset class="scrollable-tab-overwrite"
+                        active="activeTabIndex" id="tab_view">
+                <uib-tab class="console-main-tab "
+                         index="tab.tabReference" ng-repeat="tab in tabs"
+                         select="tabSelected(tab.tabReference)">
+                    <uib-tab-heading>
+                        <div class="pull-left tab-title">{{tab.title}}
+                            <a data-ng-click='closeTab(tab)' class='btn btn-tab-close' href="javascript:">
+                                <span class='ti-close'></span>
+                            </a>
+                        </div>
+                    </uib-tab-heading>
+
+                    <div ng-switch on="tab.viewType">
+                        <div ng-switch-when="engagement">
+                            <engagement-tab load-tags="reloadTagAndCategories()"
+                                            tag-category-list="tagCategories"
+                                            tag-list="tags" users="users"
+                                            notification_data="{{tab.notificationData}}"
+                                            session-id="{{tab.notificationData.sessionId}}"
+                                            skill="{{tab.notificationData.skill}}"
+                                            company="{{tab.notificationData.company}}"
+                                            channel="{{tab.notificationData.channel}}"
+                                            channel-from="{{tab.notificationData.channelFrom}}"
+                                            channel-to="{{tab.notificationData.channelTo}}"
+                                            direction="{{tab.notificationData.direction}}"
+                                            profile-detail="tab.notificationData.userProfile"
+                                            tab-reference="{{tab.tabReference}}"
+                                            search-users="searchExternalUsers"
+                                            schema-response-new-ticket="schemaResponse"
+                                            pie-chart-option="ticketPieChartOpt"
+                                            integration-data="integrationDataList">
+                            </engagement-tab>
+                        </div>
+                        <div ng-switch-when="ticketView ">
+                            <ticket-tab-view ticket-details="tab" call-customer="makeCallHistory(caller, type)"
+                                             load-tags="reloadTagAndCategories()"
+                                             show-tab-chat-panel="showTabChatPanel(chatUser)"
+                                             set-extention="setExtention(selectedUser)"
+                                             tag-category-list="tagCategories"
+
+                                             tag-list="tags"></ticket-tab-view>
+                            <!--<div ng-include="'app/views/ticket/ticket-view.html'"></div>-->
+                        </div>
+                        <div ng-switch-when="filter">
+                            <div ng-include="'app/views/ticket/filter/ticket-filter.html'"></div>
+                        </div>
+                        <div ng-switch-when="mail-inbox">
+                            <div ng-include="'app/views/mail-inbox/inbox-view.html'"></div>
+                        </div>
+                        <!--<div ng-switch-when="dashboard" class="bg-gray-200">-->
+                        <!--<div ng-include="'app/views/dashboard/agentDashboard1.html'"></div>-->
+                        <!--&lt;!&ndash;<div ng-include="'app/views/dashboard/agentDashboard1_1.html'"></div>&ndash;&gt;-->
+                        <!--</div>-->
+                        <div ng-switch-when="dashboard" class="bg-gray-200">
+                            <div ng-include="'app/views/dashboard/agentDashboard1_1.html'"></div>
+                        </div>
+                        <div ng-switch-when="MyNote">
+                            <div ng-include="'app/views/myNote/my-remeider-note.html'"></div>
+                        </div>
+                        <div ng-switch-when="new-profile">
+                            <div
+                                    ng-include="'app/views/ui-kit/user-profile/user-engagement-console.html'"></div>
+                        </div>
+
+                        <div ng-switch-when="Ticket-Inbox">
+                            <!--<div ng-include="'app/views/ui-kit/inbox/inbox-console.html'"></div> -->
+                            <div ng-include="'app/views/ticket/inbox/inbox-console.html'"></div>
+                        </div>
+                        <div ng-switch-when="Knowladge-Portal">
+                            <!--<div ng-include="'app/views/ui-kit/inbox/inbox-console.html'"></div> -->
+                            <div ng-include="'app/views/knowladge-portal/knowladge-portal-home.html'"></div>
+                        </div>
+
+                        <!-- setting page --->
+                        <div ng-switch-when="profile-setting">
+                            <!--<div ng-include="'app/views/ui-kit/inbox/inbox-console.html'"></div> -->
+                            <div ng-include="'app/views/user-profile/profile-setting.html'"></div>
+                        </div>
+                        <div ng-switch-when="windows_phone_list">
+                            <!--<div ng-include="'app/views/ui-kit/inbox/inbox-console.html'"></div> -->
+                            <div ng-include="'app/veeryPhone/view/windows_phone_lists.html'"></div>
+                        </div>
+                        <div ng-switch-when="contact_list">
+                            <div >
+                                <uib-tabset active="active" >
+                                    <uib-tab index="$index + 1" ng-repeat="tab in contactTab" heading="{{tab.title}}"
+                                             disable="tab.disabled">
+                                        <div class="animated fadeInLeft" ng-if="tab.content=='contact'"
+                                             ng-include="'app/views/softPhone/contact-list-temp.html'"></div>
+                                        <div class="animated fadeInRight" ng-if="tab.content=='log'"
+                                             ng-include="'app/views/softPhone/recent-call-temp.html'"></div>
+                                        <div class="animated fadeInRight" ng-if="tab.content=='ivr'"
+                                             ng-include="'app/views/softPhone/ivr_list.html'"></div>
+
+                                    </uib-tab>
+                                </uib-tabset>
+                            </div>
+                        </div>
+                        <div ng-switch-when="AgentTicket">
+
+                            <div ng-include="'app/views/ticket/new-agent-ticket.html'"></div>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </scrollable-tabset>
+    </div>
+
+
+    <!--&lt;!&ndash; soft phone &ndash;&gt;
+    <div class="draggableContainer" ng-controller="call_notifications_controller">
+
+
+        <div id="softPhone">
+
+            <div id="softPhoneDragElem"
+                 class="soft-phone-drag-elem" ng-class="!isEnableSoftPhoneDrag?'soft-b-67':''">
+
+                <div id="idPhoneReconnect"
+                     class="phone-reconnect-wrapper display-none">
+                    <div class="p-reconnect-wrp">
+                        <svg class="spinner-container"
+                             width="50px"
+                             height="50px"
+                             viewBox="0 0 52 52">
+                            <circle class="path" cx="26px" cy="26px" r="20px"
+                                    fill="none"
+                                    stroke-width="4px"/>
+                        </svg>
+
+                        <div class="p-reconnect-text">
+                            Reconnecting...
+                        </div>
+                    </div>
+                </div>
+                &lt;!&ndash; conatact phoen book &ndash;&gt;
+                <div id="phoneBook" class="phone-book-wrp ">
+                    <uib-tabset active="active" class="phone-book-tab">
+                        <uib-tab index="$index + 1" ng-repeat="tab in contactTab" heading="{{tab.title}}"
+                                 disable="tab.disabled">
+                            <div class="animated fadeInLeft" ng-if="tab.content=='contact'"
+                                 ng-include="'app/views/softPhone/contact-list-temp.html'"></div>
+                            <div class="animated fadeInRight" ng-if="tab.content=='log'"
+                                 ng-include="'app/views/softPhone/recent-call-temp.html'"></div>
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
+
+
+                <div class="isOperationPhone dial-pad-wrapper draggable ">
+                    <ul class="phone-t-menu">
+                        <li>
+                            <div class="pin-screen-wrapper" style="cursor: move;">
+                                <i class="ti-move"></i>
+                            </div>
+                        </li>
+                        <li>
+                            <div id="pinScreen" class="pin-screen-wrapper display-block"
+                                 onclick="pinScreen()">
+                                <i class="ti-angle-up"></i>
+                            </div>
+                        </li>
+                        <li>
+                            <div id="removePinScreen" class="pin-screen-wrapper display-none" onclick="removePin()">
+                                <i class="ti-angle-down"></i>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                    <div class="phone-screen">
+                        <div class="no-action">
+                            <input id="phone_number" required type="text"
+                                   autocomplete="off"
+                                   onfocus="if (this.hasAttribute('readonly'))
+                            {this.removeAttribute('readonly');
+                         // fix for mobile safari to show virtual keyboard
+                            this.blur();this.focus();}"
+                                   class="phone-dialpad-no" id="number"
+                                   ng-model="call.number"
+                                   placeholder="000-00-000">
+                        </div>
+
+
+                        <div class="dial-action" id="callStatus" ng-class="{'error-txt': profile.freezeExceeded==true}">
+
+                        </div>
+                        <div class="call-duations" id="calltimmer">
+                            &lt;!&ndash;{{duations}}&ndash;&gt;
+                            <div id="call_notification_call_duration_webrtc_timer">00:00:00</div>
+                        </div>
+                        <div class="display-none" id="countdownCalltimmer" >
+                            <div id="call_notification_acw_countdown_web_rtc_timer" class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="values"></div>
+                            </div>
+                            &lt;!&ndash;<timer autostart="false" countdown="countdownVal"
+                                   finish-callback="notification_panel_ui_state.call_idel();"
+                                   interval="1000">{{seconds}} second
+                                <small ng-show="isFreezeReq">Freeze Processing</small>
+                            </timer>&ndash;&gt;
+                        </div>
+                        <div class="display-none loading-duration" id="freezeRequest">
+                            Processing Freeze Request
+                        </div>
+                    </div>
+                    &lt;!&ndash;#KeyPad&ndash;&gt;
+                    <div id='divKeyPad' class="phone-dialpad-display ">
+                        &lt;!&ndash;<input required type="text" class="phone-dialpad-no" id="number"&ndash;&gt;
+                        &lt;!&ndash;ng-model="call.number"&ndash;&gt;
+                        &lt;!&ndash;placeholder="Enter the phone no to call">&ndash;&gt;
+                        <table class="phone-dialpad" id="phoneDialpad">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <input type="button" class="phone-button" value="1" data-values='[1]'/>
+                                </td>
+                                <td>
+                                    <input type="button" class="phone-button" value="2"
+                                           data-values='[2, "A", "B", "C"]'/>
+                                </td>
+                                <td>
+                                    <input type="button" class="phone-button" value="3"
+                                           data-values='[3, "D", "E", "F"]'/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="button" class="phone-button" value="4"
+                                           data-values='[4, "G", "H", "I"]'/>
+                                </td>
+                                <td>
+                                    <input type="button" class="phone-button" value="5"
+                                           data-values='[5, "J", "K", "L"]'/>
+                                </td>
+                                <td>
+                                    <input type="button" class="phone-button" value="6"
+                                           data-values='[6, "M", "N", "O"]'/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="button" class="phone-button" value="7"
+                                           data-values='[7, "P", "Q", "R", "S"]'/>
+                                </td>
+                                <td>
+                                    <input type="button" class="phone-button" value="8"
+                                           data-values='[8, "T", "U", "V"]'/>
+                                </td>
+                                <td>
+                                    <input type="button" class="phone-button" value="9"
+                                           data-values='[9, "W", "X", "Y", "Z"]'/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="button" class="phone-button" value="*" data-values='["*"]'/>
+                                </td>
+                                <td>
+                                    <input type="button" class="phone-button" value="0" data-values='["0", " "]'/>
+                                </td>
+                                <td>
+                                    <input type="button" class="phone-button" value="#" data-values='["#"]'/>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    &lt;!&ndash;#ivr&ndash;&gt;
+
+                    <div id='divIvrPad' class="IVR-wrapper phone-ivr-display ivr-list display-none">
+                        <div class="IVR-details-wrap"
+                             slimscroll="{height:'190px',
+                    railVisible: true,
+                    color: '#c5c5c5',
+                    size: '8px',
+                    distance: '5px',
+                    railColor: '#fff',
+                    railBorderRadius: 10}">
+
+                            <div class="ivr-list">
+                                <table class="table" id="phoneIvrPad">
+                                    <thead>
+                                    <tr>
+                                        <td class="text-left text-uppercase">
+                                            <b>IVR Name</b>
+                                        </td>
+                                        <td class="text-left text-uppercase">
+                                            <b>Extension</b>
+                                        </td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="ivr-tbl" ng-repeat="ivr in ivrlist" ng-click="setIvrExtension(ivr);">
+                                        <td>
+                                            {{ivr.ExtensionName}}
+                                        </td>
+                                        <td>
+                                            {{ivr.Extension}}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    &lt;!&ndash;<div id='divIvrPad' class="phone-ivr-display ivr-list display-none">&ndash;&gt;
+                    &lt;!&ndash;<table class="table" id="phoneIvrPad">&ndash;&gt;
+                    &lt;!&ndash;<tbody>&ndash;&gt;
+
+                    &lt;!&ndash;<tr ng-repeat="ivr in ivrlist" ng-click="setIvrExtension(ivr);">&ndash;&gt;
+                    &lt;!&ndash;<td>&ndash;&gt;
+                    &lt;!&ndash;{{ivr.ExtensionName}}&ndash;&gt;
+                    &lt;!&ndash;</td>&ndash;&gt;
+                    &lt;!&ndash;<td>&ndash;&gt;
+                    &lt;!&ndash;{{ivr.Extension}}&ndash;&gt;
+                    &lt;!&ndash;</td>&ndash;&gt;
+                    &lt;!&ndash;</tr>&ndash;&gt;
+                    &lt;!&ndash;</tbody>&ndash;&gt;
+                    &lt;!&ndash;</table>&ndash;&gt;
+                    &lt;!&ndash;</div>&ndash;&gt;
+                </div>
+                &lt;!&ndash;PHONE MAIN WRAPPER &ndash;&gt;
+                <div class="isOperationPhone call-operation-wrapper animated flipInX"
+                     id="callOperation">
+                    <div id="phoneBtnWrapper" class="phone-button-wrapper ">
+                        &lt;!&ndash; answer button &ndash;&gt;
+                        <div class="phone-sm-btn answer p-anz-btn" id="answerButton" title="Answer/Make Call [Alt+A]"
+                        >
+                            <i class="veery-phone-icon-1-call-answer"></i>
+                        </div>
+                        &lt;!&ndash; call end button &ndash;&gt;
+                        <div class="phone-sm-btn call-ended" title="End Call [Alt+C]" id="endButton"
+                             ng-click="notification_panel_phone.call_end();">
+                            <i class="veery-phone-icon-1-call-ended"></i>
+                        </div>
+                        &lt;!&ndash; call hold button &ndash;&gt;
+                        <div class="phone-sm-btn " title="Hold/Unhold [Alt+H]" id="holdResumeButton"
+                             ng-click="notification_panel_phone.call_hold();">
+                            <i class="veery-font-1-pause"></i>
+                        </div>
+                        &lt;!&ndash; dial pad &ndash;&gt;
+                        <div id="dialPad" class="phone-sm-btn  veery-font-1-menu-4" title="Dialpad"
+                             ng-click="ShowHideDialpad();">
+                        </div>
+                        &lt;!&ndash;  contact list button &ndash;&gt;
+                        &lt;!&ndash; <div id="contactList" class="phone-sm-btn phone-sm-bn-p8" title="Contact List">
+                             <i class="veery-font-1-user"></i>
+                         </div>&ndash;&gt;
+                        <div class="phone-sm-btn  veery-font-1-user"
+                             ng-click="notification_panel_ui_methid.showPhoneBook();"
+                             id="contactList" title="Contact List">
+                        </div>
+
+                        <div class="phone-sm-btn  veery-font-1-more"
+                             ng-click="notification_panel_ui_methid.showMoreOption();"
+                             id="morebtn" title="More"></div>
+
+                        <div class="phone-sm-btn" title="Freeze [Alt+Z]" id="freezebtn"
+                             ng-click="notification_panel_phone.call_freeze();">
+                            <i class="veery-font-1-stopwatch-2"></i>
+                        </div>
+
+                        <div class="phone-sm-btn" title="End-ACW [Alt+Q]" id="endACWbtn"
+                             ng-click="notification_panel_phone.call_end_acw();">
+                            <i class="veery-font-1-alarm"></i>
+                        </div>
+
+                    </div>
+
+
+                    <div id="onlinePhoneBtnWrapper" class="phone-button-wrapper display-none">
+                        &lt;!&ndash;<div class="phone-sm-btn  veery-font-1-time"&ndash;&gt;
+                        &lt;!&ndash;ng-click="notification_panel_phone.showCallLogs();"&ndash;&gt;
+                        &lt;!&ndash;id="showCallLogs" title="Call Logs">&ndash;&gt;
+                        &lt;!&ndash;</div>&ndash;&gt;
+                        &lt;!&ndash; mute/unmiute hold button &ndash;&gt;
+                        <div class="phone-sm-btn " id="speakerButton" title="Mute Call"
+                             ng-click="notification_panel_phone.call_mute();">
+
+                        </div>
+                        &lt;!&ndash; call transfer button &ndash;&gt;
+                        <div id="transferCall" class="phone-sm-btn  " title="Transfer Call"
+                             ng-click="notification_panel_phone.call_transfer(call.number);">
+                            <i class="main-icon-2-next"></i>
+                        </div>
+
+                        &lt;!&ndash; ETL button &ndash;&gt;
+                        <div id="etlCall" class="phone-sm-btn " ng-click="notification_panel_phone.call_etl();"
+                             title="End Transfer Call">
+                            <i class="main-icon-2-transfer"></i>
+                        </div>
+                        &lt;!&ndash; conference button &ndash;&gt;
+                        <div id="conferenceCall" class="phone-sm-btn "
+                             ng-click="notification_panel_phone.call_conference();"
+                             title="Conference">
+                            <i class="main-icon-2-stick-man-2"></i>
+                        </div>
+                        &lt;!&ndash; ivr button &ndash;&gt;
+                        <div id="transferIvr" class="phone-sm-btn "
+                             ng-click="notification_panel_ui_methid.showIvrPenel();"
+                             title="IVR">
+                            <i class="main-icon-2-stick-man-2"></i>
+                        </div>
+                        <div class="phone-sm-btn p-close-btn " ng-click="notification_panel_ui_methid.hideMoreOption();"
+                             title="Close">
+                            <i class="ti-close"></i>
+                        </div>
+                    </div>
+
+                    <div id="contactBtnWrp" class="phone-button-wrapper display-none" style="text-align: center;">
+                        <div class="phone-sm-btn p-close-btn " ng-click="notification_panel_ui_methid.hidePhoneBook();"
+                             title="Close">
+                            <i class="ti-close"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        &lt;!&ndash; incoming call notification display-none&ndash;&gt;
+        <div id="incomingNotification" class="console-phone-wrapper display-none   Phone is-animating " >
+            <div class="income-call-wrapper -ringing ">
+                <div class="income-call-details">
+                    <div class="company-details">
+                        <small>Company : {{call.CompanyNo}}</small>
+                    </div>
+                    <div class="user-details">
+                        <small ng-if="call.transferName">{{call.transferName}}</small>
+                        <h4>{{call.number}}</h4>
+                        <small>{{call.skill}}</small>
+                    </div>
+                    <div class="incoming-action-wrapper">
+                        <div class="row">
+                            <div class="col-md-6 p-left-40">
+                                <div class="anz-btn  " ng-click="notification_panel_phone.call_answer();" title="Answer Call [Alt+A]">
+                                    <div class="sonar-wave-green"></div>
+                                    <i class="veery-phone-icon-1-call-answer"
+                                       ng-click="notification_panel_phone.call_answer();"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-6 p-left-40">
+                                <div class="hangout-btn" ng-click="notification_panel_phone.call_end();" title="Reject Call [Alt+R]">
+                                    <i class="veery-phone-icon-1-end-call-button"
+                                       ng-click="notification_panel_phone.call_end();"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>-->
+
+
+    <div ng-click="goToTopScroller();"
+         ng-class="{'display-block bounceIn':isFiexedTab==true,
+              'display-none':isFiexedTab==false}" class="quick-scroller bold animated">
+        TOP
+    </div>
+
+    <!-- agent setting class="display-none" -->
+    <!--  ng-if="isShowSetting==true" -->
+    <div id="settingPage" ng-if="isShowSetting==true">
+        <div ng-include="'app/views/agent/agentSettings.html'"></div>
+    </div>
+
+    <!-- WEB PHONE -->
+    <!-- phone operation panel  -->
+
+
+    <!--Notification more information -->
+    <div ng-include="'app/views/notification-details.html'"></div>
+
+
+    <!-- lock screen -->
+    <div ng-include="'app/views/lock-screen.html'"></div>
+
+    <!-- chat UI -->
+    <div ng-repeat="user in selectedChatUser track by $index">
+        <chat-tab-directive chat-user="user"
+                            chat-text="chatText"
+                            get-chat-random-id="getChatRandomId()"
+                            selected-chat-user="selectedChatUser"
+                            show-auto-hide-chat="showAutoHideChat()"
+                            login-avatar="loginAvatar"
+                            login-name="loginName"
+                            chat-templates="myTemplates">
+        </chat-tab-directive>
+    </div>
+
+    <!-- right nav bar -->
+    <!--<div ng-include="'app/views/right-menu.html'"></div>-->
+
+    <!-- agent dialer -->
+    <div ng-include="'app/views/agent-dialer/agent-dialer.html'"></div>
+
+</div>
+
+
+<div ui-view>
+
+</div>
+
+<!--phone VIdeo/audio panel-->
+<div>
+    <!--<div>
+        <div id="divVideo">
+            <div id="divVideoRemote">
+                <video id="video_remote"
+                       autoplay="autoplay"
+                ></video>
+            </div>
+
+            <div id="divVideoLocalWrapper"
+            >
+                <iframe></iframe>
+                <div id="divVideoLocal"
+                >
+                    <video id="video_local"
+                           autoplay="autoplay"
+                           muted="true"></video>
+                </div>
+            </div>
+            <div id="divScreencastLocalWrapper"
+            >
+                <iframe></iframe>
+                <div id="divScreencastLocal"
+                >
+                </div>
+            </div>
+            &lt;!&ndash;div id="div1" style="margin-left: 300px; border:0px solid #009; z-index: 1000">
+            <iframe class="previewvideo" style="border:0px solid #009; z-index: 1000"> </iframe>
+            <div id="div2" class="previewvideo" style='border:0px solid #009; z-index: 1000'>
+            <input type="button" class="btn" style="" id="Button1" value="Button1" /> &nbsp;
+            <input type="button" class="btn" style="" id="Button2" value="Button2" /> &nbsp;
+            </div>
+            </div&ndash;&gt;
+        </div>
+    </div>-->
+
+    <div>
+        <!-- Audios -->
+        <audio id="audio_remote" autoplay="autoplay"></audio>
+        <!--<audio id="ringtone" loop  src="assets/sounds/ringtone.wav"></audio>-->
+        <audio id="ringbacktone" loop src="assets/sounds/ringbacktone.wav"></audio>
+        <audio id="dtmfTone" src="assets/sounds/dtmf.wav"></audio>
+    </div>
+</div>
+
+
+
+
+
+

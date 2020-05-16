@@ -1,0 +1,259 @@
+<div ng-controller="mailInboxCtrl">
+    <div class="mail-inbox-wrapper animated fadeIn"">
+        <!-- MODEL HEADER -->
+        <div class="model-header">
+            <div class="col-md-6">
+                <div class="mode-left-icon   float-left">
+                    <i class="veery-font-3-mail-5"></i>
+                </div>
+                <div class="model-header-text bold p-top-10">
+                    Mail Inbox
+                </div>
+            </div>
+
+            <!--<div class="col-md-6 col-sm-6 ">
+                <div class="model-btn-wrapper">
+                    <div class="btn-warp ">
+                        <span class="btn btn-default btn-close" id="closeTicket">close</span>
+                    </div>
+
+                </div>
+            </div>-->
+        </div>
+        <!--END HEADER -->
+
+        <div class="col-lg-12 p-0">
+            <!-- left wrapper -->
+            <div class="col-md-2" style="background: #f7f5f5;">
+                <!-- MAIL OPTION WRAPPER -->
+                <div class="main-option-wrapper">
+                    <div class="mail-option" ng-click="reloadInboxMessages()">
+                        <div class="header-left pull-left">
+                            Inbox
+                        </div>
+
+
+                        <div class="header-count pull-right">
+                            <div>
+                                {{counters.INBOX}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mail-option" ng-click="reloadReadMessages()">
+                        <div class="header-left pull-left">
+                            Read
+                        </div>
+
+
+                        <div class="header-count pull-right">
+                            <div>
+                                {{counters.READ}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mail-option" ng-click="reloadUnreadMessages()">
+                        <div class="header-left pull-left">
+                            Unread
+                        </div>
+
+
+                        <div class="header-count pull-right">
+                            <div>
+                                {{counters.UNREAD}}
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="mail-option" ng-click="reloadDeletedMessages()">
+                        <div class="header-left pull-left">
+                            Deleted
+                        </div>
+                        <div class="header-count pull-right">
+                            <div>
+                                {{counters.DELETED}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END -->
+
+                <!-- FILTER WRAPPER -->
+                <div class="filter-wrapper">
+                    <div class="mail-filter ">
+                        <h5 class="bold">FILTERS</h5>
+                    </div>
+                    <div class="filter-option" ng-click="reloadFacebookMessages()">
+                        <div class="number-count pull-right">
+                            {{counters.FACEBOOK}}
+                        </div>
+                        <div class="pull-left">
+                            facebook
+                        </div>
+                    </div>
+                    <div class="filter-option" ng-click="reloadTwitterMessages()">
+                        <div class="number-count pull-right">
+                            {{counters.TWITTER}}
+                        </div>
+                        <div class="pull-left">
+                            twitter
+                        </div>
+                    </div>
+                    <div class="filter-option" ng-click="reloadNotificationMessages()">
+                        <div class="number-count pull-right">
+                            {{counters.NOTIFICATION}}
+                        </div>
+                        <div class="pull-left">
+                            notification
+                        </div>
+                    </div>
+                    <div class="filter-option" ng-click="reloadSMSMessages()">
+                        <div class="number-count pull-right">
+                            {{counters.SMS}}
+                        </div>
+                        <div class="pull-left">
+                            sms
+                        </div>
+                    </div>
+                    <!-- END -->
+
+                </div>
+            </div>
+            <!-- end -->
+
+            <!-- right wrapper -->
+            <div class="col-sm-10">
+
+                <div class="mail-right-header ">
+                    <div class="mail-option-header ">
+                        <div class="mail-btn-wrap">
+                            <div class="mail-header bold">
+                                {{currentFilter}} ({{currentPageCount}})
+                            </div>
+                        </div>
+
+
+                        <div class="pull-right">
+                            <div class="mail-btn-wrap color-green500 bold ">
+                                <h5>{{pageStartCount + 1}}-{{pageStartCount + 10}} of {{currentPageCount}}</h5>
+                            </div>
+                            <div class="mail-btn-wrap ">
+                                <span class="btn">
+                                    <i class="main-icon-2-previous" ng-click="getPreviousPage()"></i>
+                                </span>
+                            </div>
+                            <div class="mail-btn-wrap ">
+                                <span class="btn">
+                                     <i class="main-icon-2-next" ng-click="getNextPage()"></i>
+                                </span>
+                            </div>
+                            <div class="mail-btn-wrap" ng-show="isSelectedEmail">
+                                <div class="mail-btn-wrap" ng-click="closeMailDesc();">
+                                    <span class="btn btn-default btn-green500">back</span>
+                                </div>
+                            </div>
+                            <div class="mail-btn-wrap" ng-show="isSelectedEmail">
+                                <div class="mail-btn-wrap" ng-click="closeMailDesc();">
+                                    <span class="btn btn-default btn-green100">close</span>
+                                </div>
+                            </div>
+                            <div class="mail-btn-wrap" >
+                                <div class="mail-btn-wrap" >
+                                    <span ng-if="!isSelectedEmail && currentFilter !== 'DELETED'" class="btn btn-default btn-red600" ng-click="deleteMultipleMessages()">delete</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="mail-details-wrapper">
+
+                    <div ng-repeat="message in filteredMailDisplay">
+                        <div  class="mail-details" ng-class="{'bold': !message.has_read}">
+                            <div class="col-lg-12 col-sm-12">
+                                <div class="col-sm-12 col-md-1">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="blankCheckbox" value="option1"
+                                                   aria-label="..." ng-click="markMessage(message)">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-2 p-0" ng-click="clickMoreEmailDetails(message)">
+                                    <div class="mail-icon">
+                                        <i ng-if="message.message_type === 'NOTIFICATION'" class="fa fa-bell-o"></i>
+                                        <i ng-if="message.message_type === 'FACEBOOK'" class="fa fa-facebook"></i>
+                                        <i ng-if="message.message_type === 'TWITTER'" class="fa fa-twitter"></i>
+                                        <i ng-if="message.message_type === 'SMS'" class="fa fa-envelope"></i>
+                                    </div>
+                                    <div class="main-text">
+                                        <div ng-if="message.from">{{message.from.toUpperCase()}}</div><div ng-if="!message.from && message.engagement_session && message.engagement_session.channel_from">{{message.engagement_session.channel_from.toUpperCase()}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6  p-0" ng-click="clickMoreEmailDetails(message)">
+                                    <div class="mail-header text-left">
+                                        {{message.heading}}
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-3  p-0 text-right">
+                                    <div class="mail-header text-right">
+                                        {{moment(message.received_at).local().format("YYYY-MMM-DD")}}
+                                        <i class="fa fa-trash-o" ng-if="currentFilter !== 'DELETED'" ng-click="deleteInboxMessage(message._id)"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- view email more template -->
+                    <div id="emailDescView" class="email-desc-wrapper">
+
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="col-lg-5">
+                                    <div class="pull-left mail-icon-large">
+                                        <i ng-if="currentDisplayMessage.message_type === 'NOTIFICATION'" class="fa fa-bell-o fa-2x"></i>
+                                        <i ng-if="currentDisplayMessage.message_type === 'FACEBOOK'" class="fa fa-facebook fa-2x"></i>
+                                        <i ng-if="currentDisplayMessage.message_type === 'TWITTER'" class="fa fa-twitter fa-2x"></i>
+                                        <i ng-if="currentDisplayMessage.message_type === 'SMS'" class="fa fa-envelope fa-2x"></i>
+                                        <!--<i class="fa fa-2x" ng-class="'fa-bell-o'" style="margin: 0 auto;"></i>-->
+                                    </div>
+                                    <div class="pull-left p-left-15">
+                                        <h5 class="bold"><div ng-if="currentDisplayMessage.from">From : {{currentDisplayMessage.from.toUpperCase()}}</div><div ng-if="!currentDisplayMessage.from && currentDisplayMessage.engagement_session && currentDisplayMessage.engagement_session.channel_from">From : {{currentDisplayMessage.engagement_session.channel_from.toUpperCase()}}</div></h5>
+                                        <h5 class="bold"><div ng-if="currentDisplayMessage.engagement_session && currentDisplayMessage.engagement_session.channel_to">To : {{currentDisplayMessage.engagement_session.channel_to.toUpperCase()}}</div></h5>
+                                        <h5 class="bold">Date : {{moment(currentDisplayMessage.received_at).local().format("LLLL")}}</h5>
+                                        <h5 class="bold">Topic : {{currentDisplayMessage.heading}}</h5>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7">
+                                    <div class="mail-option-header text-right">
+                                        <div class="mail-btn-wrap">
+                                            <button class="btn btn-default btn-green100" ng-disabled="!currentDisplayMessage.engagement_session" ng-click="openTab()">convert to ticket</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="mail-description">
+                                        {{currentDisplayMessage.message}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- end-->
+    </div>
+</div>
