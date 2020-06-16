@@ -746,9 +746,9 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
         },
         Register: function () {
             try {
-                var decodeData = jwtHelper.decodeToken(authService.TokenWithoutBearer());
-                var res = $filter('filter')(decodeData.scope, {resource: "SoftPhone"}, true);
-                if (res.length > 0 && res[0].resource === "SoftPhone" && res[0].actions.length > 0) {
+//                 var decodeData = jwtHelper.decodeToken(authService.TokenWithoutBearer());
+//                 var res = $filter('filter')(decodeData.scope, {resource: "SoftPhone"}, true);
+//                 if (res.length > 0 && res[0].resource === "SoftPhone" && res[0].actions.length > 0) {
                     $('#isCallOnline').addClass('display-none deactive-menu-icon').removeClass('display-block');
                     $('#isLoadingRegPhone').addClass('display-block').removeClass('display-none');
                     $('#phoneRegister').addClass('display-none');
@@ -760,11 +760,11 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
                     /*return;
                     $scope.veeryPhone.Register('DuoS123');*/
                     getALlPhoneContact();
-                }
-                else {
-                    console.log("feature is disabled----------------------");
-                    $scope.showAlert("Phone", "error", "feature is disabled");
-                }
+//                 }
+//                 else {
+//                     console.log("feature is disabled----------------------");
+//                     $scope.showAlert("Phone", "error", "feature is disabled");
+//                 }
             } catch (ex) {
                 console.error(ex);
             }
