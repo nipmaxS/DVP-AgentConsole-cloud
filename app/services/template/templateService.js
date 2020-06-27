@@ -64,7 +64,7 @@ agentApp.factory("templateService", function ($http, baseUrls, authService) {
     var getTemplatesByType = function () {
         return $http({
             method: 'get',
-            url: baseUrls.templateUrl + "/RenderService/TemplateByType/text"
+            url: baseUrls.templateUrl + "RenderService/TemplateByType/text"
         }).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
