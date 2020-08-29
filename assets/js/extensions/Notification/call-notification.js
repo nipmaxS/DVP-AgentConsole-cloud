@@ -3,15 +3,16 @@
  */
 
 // request permission on page load
-document.addEventListener('DOMContentLoaded', function () {
-    if (Notification.permission !== "granted")
-        Notification.requestPermission();
+document.addEventListener("DOMContentLoaded", function () {
+  if (Notification.permission !== "granted") Notification.requestPermission();
 });
 
-function callNotification(name, number,skill) {
-
-    showNotification("Hello "+name+" You Are Receiving a "+skill+" Call From "+number,15000);
-    /*if (!Notification) {
+function callNotification(name, number, skill) {
+  showNotification(
+    "Hello " + name + " You Are Receiving a " + skill + " Call From " + number,
+    15000
+  );
+  /*if (!Notification) {
         alert('Desktop notifications not available in your browser. Try Chromium.');
         return;
     }
@@ -30,25 +31,23 @@ function callNotification(name, number,skill) {
         };
 
     }*/
-
 }
 
-function showNotification(msg,durations) {
-    if (!Notification) {
-        alert('Desktop notifications not available in your browser. Try Chromium.');
-        return;
-    }
+function showNotification(msg, durations) {
+  if (!Notification) {
+    alert("Desktop notifications not available in your browser. Try Chromium.");
+    return;
+  }
 
-    if (Notification.permission !== "granted")
-        Notification.requestPermission();
-    else {
-        var notification = new Notification('Facetone', {
-            icon: 'assets/img/logo_130x130yellow.png',
-            body: msg
-        });
-        setTimeout(notification.close.bind(notification), durations);
-        notification.onclick = function () {
-            window.focus();
-        };
-    }
+  if (Notification.permission !== "granted") Notification.requestPermission();
+  else {
+    var notification = new Notification("Facetone", {
+      icon: "assets/img/Flag_of_the_Sri_Lanka_Police.svg",
+      body: msg,
+    });
+    setTimeout(notification.close.bind(notification), durations);
+    notification.onclick = function () {
+      window.focus();
+    };
+  }
 }

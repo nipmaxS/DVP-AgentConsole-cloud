@@ -1,158 +1,214 @@
 <div class="login-main-wrp animated fadeIn" ng-controller="loginCtrl">
-    <div class="container">
-        <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
-            <div class="login-new-logo">
-                <img src="assets/img/logo_130x130_white.png"/>
-            </div>
-            <div class="login-wrp">
-                <div class="col-lg-7" style="padding: 15px">
-                    <div id="login" class="login-new-right-wrp">
-                        <div class="login-new-hl-wrp selected">
-                            Login - Agent Console
-                        </div>
-                        <div class="login-new-frm">
-                            <form name="loginFrm" novalidate autocomplete="off">
-                                <div class="form-group p-bottom-15">
-                                    <label for="companyName">Company Name</label>
-                                    <span class="inline-block validation-on pull-right"
-                                          ng-show="loginFrm.companyName.$invalid &&
-                           !loginFrm.companyName.$pristine">
-                           required filed
-                                     </span>
-                                    <input type="text"
-                                           class="animated  form-control login-text login-txt"
-                                           id="companyName"
-                                           ng-model="companyName"
-                                           name="companyName"
-                                           required disabled>
-                                </div>
-                                <div class="form-group p-bottom-15">
-                                    <label for="usersName">Username</label>
-                                    <span class="inline-block validation-on pull-right"
-                                          ng-show="loginFrm.userName.$invalid &&
-                           !loginFrm.userName.$pristine">
-                           required filed
-                                     </span>
-                                    <input type="text"
-                                           class="animated  form-control login-text login-txt"
-                                           id="usersName"
-                                           ng-model="userNme"
-                                           name="userName"
-                                           required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="pwd">Password</label>
-                                    <span class="inline-block validation-on pull-right "
-                                          ng-show="loginFrm.password.$invalid &&
-                           !loginFrm.password.$pristine">
-                           required filed
-                     </span>
-                                    <input type="password"
-                                           class="animated  form-control login-text login-txt"
-                                           id="pwd"
-                                           name="password"
-                                           ng-model="pwd"
-                                           required>
+  <div class="container">
+    <div
+      class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2"
+    >
+      <div class="login-new-logo">
+        <img src="assets/img/Flag_of_the_Sri_Lanka_Police.svg" />
+      </div>
+      <div class="login-wrp">
+        <div class="col-lg-7" style="padding: 15px">
+          <div id="login" class="login-new-right-wrp">
+            <div class="login-new-hl-wrp selected">Login - Agent Console</div>
+            <div class="login-new-frm">
+              <form name="loginFrm" novalidate autocomplete="off">
+                <div class="form-group p-bottom-15">
+                  <label for="companyName">Company Name</label>
+                  <span
+                    class="inline-block validation-on pull-right"
+                    ng-show="loginFrm.companyName.$invalid &&
+                           !loginFrm.companyName.$pristine"
+                  >
+                    required filed
+                  </span>
+                  <input
+                    type="text"
+                    class="animated form-control login-text login-txt"
+                    id="companyName"
+                    ng-model="companyName"
+                    name="companyName"
+                    required
+                    disabled
+                  />
+                </div>
+                <div class="form-group p-bottom-15">
+                  <label for="usersName">Username</label>
+                  <span
+                    class="inline-block validation-on pull-right"
+                    ng-show="loginFrm.userName.$invalid &&
+                           !loginFrm.userName.$pristine"
+                  >
+                    required filed
+                  </span>
+                  <input
+                    type="text"
+                    class="animated form-control login-text login-txt"
+                    id="usersName"
+                    ng-model="userNme"
+                    name="userName"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="pwd">Password</label>
+                  <span
+                    class="inline-block validation-on pull-right"
+                    ng-show="loginFrm.password.$invalid &&
+                           !loginFrm.password.$pristine"
+                  >
+                    required filed
+                  </span>
+                  <input
+                    type="password"
+                    class="animated form-control login-text login-txt"
+                    id="pwd"
+                    name="password"
+                    ng-model="pwd"
+                    required
+                  />
 
-                                    <div class="long-divider"></div>
-                                    <div class="login-with-social">
-                                        <ul>
-                                            <li ng-click="authenticate('facebook')">
-                                                <i class="fa fa-facebook hover" title="Login with Facebook" style="cursor: pointer"></i>
-                                            </li>
-                                            <li ng-click="authenticate('google')">
-                                                <i class="fa fa-google hover" title="Login with Gmail" style="cursor: pointer"></i>
-                                            </li>
-                                            <li>
-                                                <i class="fa fa-github disable" title="Login with GitHub (In Development)"></i>
-                                            </li>
-                                            <li><i class="fa fa-twitter disable" title="Login with twitter (In Development)"></i></li>
-                                            <li><i class="fa fa-linkedin disable" title="Login with LinkedIn (In Development)"></i></li>
-                                        </ul>
-                                    </div>
-
-                                </div>
-
-                                <div class="login-n-footer">
-                                    <button ng-click="onClickLogin()" ng-if="!isLogin" ng-disabled="loginFrm.$invalid"
-                                            class="btn btn-n-sign" style="display: inline-block">
-                                        Sign in
-                                    </button>
-
-                                    <div class="login-n-forget-pwd">
-                                        <ul>
-                                            <li tooltip-placement="top"
-                                                uib-tooltip="password reset using email" ng-click="goToRestEmail();"
-                                                class="btn-template-primary btn-circle">
-                                                <i class="ti-email"></i>
-                                            </li>
-                                            <li tooltip-placement="top"
-                                                uib-tooltip="password reset using token" ng-click="goToRestToken();"
-                                                class="btn-template-primary btn-circle">
-                                                <i class="ti-user"></i>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="login-n-forget-pwd b-l">
-                                        Forget Password ?
-                                    </div>
-
-
-                                    <button ng-if="isLogin" disabled
-                                            class="btn btn-n-sign" style="display: inline-block">
-                                        Please wait...
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                  <div class="long-divider"></div>
+                  <div class="login-with-social">
+                    <ul>
+                      <li ng-click="authenticate('facebook')">
+                        <i
+                          class="fa fa-facebook hover"
+                          title="Login with Facebook"
+                          style="cursor: pointer"
+                        ></i>
+                      </li>
+                      <li ng-click="authenticate('google')">
+                        <i
+                          class="fa fa-google hover"
+                          title="Login with Gmail"
+                          style="cursor: pointer"
+                        ></i>
+                      </li>
+                      <li>
+                        <i
+                          class="fa fa-github disable"
+                          title="Login with GitHub (In Development)"
+                        ></i>
+                      </li>
+                      <li>
+                        <i
+                          class="fa fa-twitter disable"
+                          title="Login with twitter (In Development)"
+                        ></i>
+                      </li>
+                      <li>
+                        <i
+                          class="fa fa-linkedin disable"
+                          title="Login with LinkedIn (In Development)"
+                        ></i>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
 
-                <div class="col-lg-5">
-                    <div class="row">
-                        <div class="login-new-bg"></div>
-                        <div class="login-left-i-wrp">
-                            <!--<img src="assets/img/bg/bg_900x500.jpg">-->
-                            <div class="login-new-body">
-                                <div class="login-new-header hidden-md hidden-sm hidden-xs">
-                                    Welcome
-                                </div>
-                                <div class="login-new-hedaer-1 hidden-md hidden-sm hidden-xs">
-                                    Communication and Collaboration Platform
-                                </div>
-                                <div class="copy-write hidden-md hidden-sm hidden-xs" style="margin: 90px 0 10px 0;opacity: 0.6">
-                                    Follow us
-                                </div>
-                                <div class="social-links">
-                                    <ul>
-                                        <li>
-                                            <a href="https://twitter.com/FaceTone_tweets" target="_blank">
-                                                <i class="fa fa-twitter"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://www.linkedin.com/showcase/13228877?pathWildcard=13228877"
-                                               target="_blank">
-                                                <i class="fa fa-linkedin"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://www.facebook.com/DuoFaceTone" target="_blank">
-                                                <i class="fa fa-facebook"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <div class="login-n-footer">
+                  <button
+                    ng-click="onClickLogin()"
+                    ng-if="!isLogin"
+                    ng-disabled="loginFrm.$invalid"
+                    class="btn btn-n-sign"
+                    style="display: inline-block"
+                  >
+                    Sign in
+                  </button>
 
-            <div class="login-right-footer">
-                © {{copywriteYear}} facetone is a product of DuoWorld Inc. All Rights Reserved
+                  <div class="login-n-forget-pwd">
+                    <ul>
+                      <li
+                        tooltip-placement="top"
+                        uib-tooltip="password reset using email"
+                        ng-click="goToRestEmail();"
+                        class="btn-template-primary btn-circle"
+                      >
+                        <i class="ti-email"></i>
+                      </li>
+                      <li
+                        tooltip-placement="top"
+                        uib-tooltip="password reset using token"
+                        ng-click="goToRestToken();"
+                        class="btn-template-primary btn-circle"
+                      >
+                        <i class="ti-user"></i>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="login-n-forget-pwd b-l">Forget Password ?</div>
+
+                  <button
+                    ng-if="isLogin"
+                    disabled
+                    class="btn btn-n-sign"
+                    style="display: inline-block"
+                  >
+                    Please wait...
+                  </button>
+                </div>
+              </form>
             </div>
+          </div>
         </div>
 
+        <div class="col-lg-5">
+          <div class="row">
+            <div class="login-new-bg"></div>
+            <div class="login-left-i-wrp">
+              <!--<img src="assets/img/bg/bg_900x500.jpg">-->
+              <div class="login-new-body">
+                <div class="login-new-header hidden-md hidden-sm hidden-xs">
+                  Welcome
+                </div>
+                <div class="login-new-hedaer-1 hidden-md hidden-sm hidden-xs">
+                  Communication and Collaboration Platform
+                </div>
+                <div
+                  class="copy-write hidden-md hidden-sm hidden-xs"
+                  style="margin: 90px 0 10px 0; opacity: 0.6"
+                >
+                  Follow us
+                </div>
+                <div class="social-links">
+                  <ul>
+                    <li>
+                      <a
+                        href="https://twitter.com/FaceTone_tweets"
+                        target="_blank"
+                      >
+                        <i class="fa fa-twitter"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.linkedin.com/showcase/13228877?pathWildcard=13228877"
+                        target="_blank"
+                      >
+                        <i class="fa fa-linkedin"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.facebook.com/DuoFaceTone"
+                        target="_blank"
+                      >
+                        <i class="fa fa-facebook"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="login-right-footer">
+        © {{copywriteYear}} facetone is a product of DuoWorld Inc. All Rights
+        Reserved
+      </div>
     </div>
+  </div>
 </div>

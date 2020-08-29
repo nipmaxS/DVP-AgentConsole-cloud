@@ -9413,7 +9413,7 @@ ul.renote-color-btn > li {
     width: 100%;
     height: 120%;
     /*opacity: 0.85;*/
-    background-image: linear-gradient(-180deg, #603281 0%, #812C87 100%);
+    background-image: linear-gradient(-180deg, #6a61d3 0%, #0e2078 100%);
     top: 0;
     bottom: 0;
     left: 0;
@@ -9575,7 +9575,7 @@ ul.renote-color-btn > li {
 }
 
 .btn-n-sign {
-    background-color: #EE437E;
+    background-color: #8d43ee;
     border-radius: 5px;
     font-size: 14px;
     color: #ffffff;
@@ -13114,7 +13114,7 @@ tr.t-dialer-b > td {
     left: 0;
     text-align:center;
     border-radius: 0 5px 5px 0;
-    background: #682F8E;
+    background: #0e2078;
     box-shadow: 3px 0 5px 0 rgba(0, 0, 0, 0.06);
     -o-box-shadow: 3px 0 5px 0 rgba(0, 0, 0, 0.06);
     -moz-box-shadow: 3px 0 5px 0 rgba(0, 0, 0, 0.06);
@@ -13170,7 +13170,7 @@ tr.t-dialer-b > td {
     color:#ffffff;
     position: fixed;
     top: 50px;
-    background: #EE437E;
+    background: #8d43ee;
     border-radius: 0;
     margin: 10px -10px;
     width: 56px;
