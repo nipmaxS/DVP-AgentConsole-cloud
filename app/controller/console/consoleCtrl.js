@@ -4180,8 +4180,16 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
 
             resourceService.BreakRequest(authService.GetResourceId(), requestOption).then(function (res) {
                 if (res.IsSuccess) {
-
+                    shared_data.previousModeOption = shared_data.currentModeOption;
                     $scope.currentBreak = requestOption;
+                    if(shared_data.currentModeOption=='Outbound') {
+                        resourceService.RemoveSharing(authService.GetResourceId(), 'CALL').then(function (data) {
+                            console.log('********REMOVE SHARING*********')
+                        }, function (error) {
+                            authService.IsCheckResponse(error);
+                            $scope.showAlert("Agent Task", "error", "Fail To remove sharing resource.");
+                        });
+                    }
                     $('#loginScreeen').removeClass('display-none').addClass('display-block');
                     $('body').addClass('overflow-hidden');
                     shared_data.userProfile = $scope.profile;
@@ -4230,7 +4238,11 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
                     if (shared_data.phone_initialize) {
                         chatService.Status('available', 'call');
                     }
-
+                    console.log(shared_data.previousModeOption);
+                    if(shared_data.previousModeOption=='Outbound'){
+                        console.log("Outbound : "+ shared_data.previousModeOption);
+                        $scope.modeOption.outboundOption('Outbound');
+                    }
                     //chatService.Status('online', 'call');
                     $rootScope.$emit("execute_command", {
                         message: 'set_agent_status_available',
@@ -4248,52 +4260,70 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
     $scope.modeOption = {
         outboundOption: function (requestOption) {
             console.log(requestOption);
+            //validation to check if the agent has been registered with the call task before selecting the mode (Inbound or Outbound)
+            $scope.resourceTaskObj.forEach(function (val) {
+                if (val.task.toLowerCase() == 'call' && val.RegTask && val.RegTask.toLowerCase() == "call") {
 
-            resourceService.BreakRequest(authService.GetResourceId(), requestOption).then(function (res) {
-                if (res.IsSuccess) {
-                    shared_data.currentModeOption = requestOption;
-                    $scope.currentModeOption = requestOption;
+                    resourceService.BreakRequest(authService.GetResourceId(), requestOption).then(function (res) {
+                        if (res.IsSuccess) {
+                            shared_data.currentModeOption = requestOption;
+                            $scope.currentModeOption = requestOption;
 
-                    shared_data.userProfile = $scope.profile;
-                    modeList.forEach(function (option) {
-                        $(option).removeClass('active-font');
+                            shared_data.userProfile = $scope.profile;
+                            modeList.forEach(function (option) {
+                                $(option).removeClass('active-font');
+                            });
+                            $('#userStatus').addClass('offline').removeClass('online');
+                            $scope.showAlert(requestOption, "success", 'update resource state success');
+                            $('#' + requestOption).addClass('active-font').removeClass('top-drop-text');
+                            $('#agentPhone').removeClass('display-none');
+                        } else {
+                            $scope.showAlert(requestOption, "warn", res.Exception ? res.Exception.Message : res.CustomMessage);
+                        }
+                    }, function (error) {
+                        authService.IsCheckResponse(error);
+                        $scope.showAlert("Break Request", "error", "Fail To Register With " + requestOption);
                     });
-                    $('#userStatus').addClass('offline').removeClass('online');
-                    $scope.showAlert(requestOption, "success", 'update resource state success');
-                    $('#' + requestOption).addClass('active-font').removeClass('top-drop-text');
-                    $('#agentPhone').removeClass('display-none');
-                } else {
-                    $scope.showAlert(requestOption, "warn", res.Exception ? res.Exception.Message : res.CustomMessage);
                 }
-            }, function (error) {
-                authService.IsCheckResponse(error);
-                $scope.showAlert("Break Request", "error", "Fail To Register With " + requestOption);
+                else{
+                    $scope.showAlert("Invalid Mode", "error", " Register with task before register with mode");
+                }
             });
         },
         inboundOption: function (requestOption) {
-            if (shared_data.currentModeOption === "Outbound" && !shared_data.allow_mode_change) {
-                $scope.showAlert("Mode Change Request", "error", "You are only allowed to change to Inbound mode while you are in Idle state");
-                return;
-            }
-            resourceService.EndBreakRequest(authService.GetResourceId(), requestOption).then(function (data) {
-                if (data.IsSuccess) {
-                    shared_data.currentModeOption = requestOption;
-                    $scope.currentModeOption = requestOption;
-                    shared_data.userProfile = $scope.profile;
-                    modeList.forEach(function (option) {
-                        $(option).removeClass('active-font').addClass('top-drop-text');
-                    });
-                    $scope.showAlert("Available", "success", "Update resource state success.");
-                    $('#userStatus').addClass('online').removeClass('offline');
-                    $('#Inbound').addClass('active-font').removeClass('top-drop-text');
+            //validation to check if the agent has been registered with the call task before selecting the mode (Inbound or Outbound)
+            $scope.resourceTaskObj.forEach(function (val) {
+                if (val.task.toLowerCase() == 'call' && val.RegTask && val.RegTask.toLowerCase() == "call") {
+                    console.log("allow mode change "+ shared_data.allow_mode_change);
+                    console.log("current Mode Option "+ shared_data.currentModeOption);
+                    if (shared_data.currentModeOption === "Outbound" && !shared_data.allow_mode_change) {
+                        $scope.showAlert("Mode Change Request", "error", "You are only allowed to change to Inbound mode while you are in Idle state");
+                        return;
+                    }
+                    resourceService.EndBreakRequest(authService.GetResourceId(), requestOption).then(function (data) {
+                        if (data.IsSuccess) {
+                            shared_data.currentModeOption = requestOption;
+                            $scope.currentModeOption = requestOption;
+                            shared_data.userProfile = $scope.profile;
+                            modeList.forEach(function (option) {
+                                $(option).removeClass('active-font').addClass('top-drop-text');
+                            });
+                            $scope.showAlert("Available", "success", "Update resource state success.");
+                            $('#userStatus').addClass('online').removeClass('offline');
+                            $('#Inbound').addClass('active-font').removeClass('top-drop-text');
 
-                    // getCurrentState.breakState();
-                    //changeLockScreenView.hide();
-                    //$scope.isUnlock = false;
-                    //return;
-                    $('#agentPhone').removeClass('display-none');
-                } else {
-                    $scope.showAlert(requestOption, "warn", data.Exception ? data.Exception.Message : data.CustomMessage);
+                            // getCurrentState.breakState();
+                            //changeLockScreenView.hide();
+                            //$scope.isUnlock = false;
+                            //return;
+                            $('#agentPhone').removeClass('display-none');
+                        } else {
+                            $scope.showAlert(requestOption, "warn", data.Exception ? data.Exception.Message : data.CustomMessage);
+                        }
+                    });
+                }
+                else{
+                    $scope.showAlert("Invalid Mode", "error", " Register with task before register with mode");
                 }
             });
         }
@@ -4328,7 +4358,6 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
 
         },
         changeStatus: function (type) {
-
             if (!shared_data.phone_initialize && checkPhonestOnTasks && type.toLowerCase() == "call" && !this.availableToRemoveTask(type)) {
                 shared_function.showWarningAlert("Agent Status", "Please Initialize Soft Phone.");
             }

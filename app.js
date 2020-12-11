@@ -1,5 +1,6 @@
 /**
- * Created by Veery Team on 8/15/2016.
+ * Branch : v3.0.0.8
+ * Updated by Veery Team on 11/12/2020.
  */
 
 
@@ -38,39 +39,39 @@ agentApp.filter('durationFilter', function () {
 });
 //test
 var baseUrls = {
-    
-    'userServiceBaseUrl': 'http://userservice.app1.veery.cloud/DVP/API/1.0.0.0/',
-    'externalUserServiceBaseUrl': 'http://externaluserservice.app1.veery.cloud/DVP/API/1.0.0.0/',
-    'userGroupServiceBaseUrl': 'http://usergroupservice.facetone.space/DVP/API/1.0.0.0/',
-    'organizationServiceBaseUrl': 'http://localhost:9004/DVP/API/1.0.0.0/',
-    'authServiceBaseUrl': 'http://authservice.app1.veery.cloud/', //http://authservice.facetone.space/oauth/
-    
-    'packageServiceBaseUrl': 'http://userservice.app1.veery.cloud/DVP/API/1.0.0.0/',
-    'internal_user_service_base_url': 'http://userservice.app1.veery.cloud/DVP/API/1.0.0.0/',
-    'notification': 'http://notificationservice.app1.veery.cloud',
-    'ardsliteserviceUrl': 'http://ardsliteservice.app1.veery.cloud/DVP/API/1.0.0.0/ARDS/',//ardsliteservice.app1.veery.cloud
-    'engagementUrl': 'http://interactions.app1.veery.cloud/DVP/API/1.0.0.0/',//interactions.app1.veery.cloud
-    'ticketUrl': 'http://liteticket.app1.veery.cloud/DVP/API/1.0.0.0/',//liteticket.app1.veery.cloud
-    'ivrUrl': 'http://eventservice.app1.veery.cloud/DVP/API/1.0.0.0/EventService/Events/SessionId/',
-    'mailInboxUrl': 'http://interactions.app1.veery.cloud/DVP/API/1.0.0.0/Inbox/',
-    'ardsMonitoringServiceUrl': 'http://ardsmonitoring.app1.veery.cloud/DVP/API/1.0.0.0/ARDS/MONITORING',
-    'fileService': 'http://fileservice.app1.veery.cloud/DVP/API/1.0.0.0/',
-    'fileServiceInternalUrl': 'http://fileservice.app1.veery.cloud/DVP/API/1.0.0.0/InternalFileService/',
-    'resourceService': 'http://resourceservice.app1.veery.cloud/DVP/API/1.0.0.0/ResourceManager/', // http://resourceservice.app1.veery.cloud
-    'dashBordUrl': 'http://dashboardservice.app1.veery.cloud/',
-    'toDoUrl': 'http://todolistservice.app1.veery.cloud/DVP/API/1.0.0.0/',    //todolistservice.app1.veery.cloud
-    'monitorrestapi': 'http://monitorrestapi.app1.veery.cloud/DVP/API/1.0.0.0/',//monitorrestapi.app1.veery.cloud
-    'integrationapi': 'http://integrationapi.app.veery.cloud/DVP/API/1.0.0.0/IntegrationAPI/', //integrationapi.app1.veery.cloud
-    'sipuserUrl': 'http://sipuserendpointservice.app1.veery.cloud/DVP/API/1.0.0.0/', //sipuserendpointservice.app1.veery.cloud
-    'pwdVerifyUrl': 'http://userservice.app1.veery.cloud/auth/verify',
-    'qaModule': 'http://qamodule.app1.veery.cloud/DVP/API/1.0.0.0/QAModule/',
-    'contactUrl': 'http://contacts.app1.veery.cloud/DVP/API/1.0.0.0/ContactManager/', //contacts.app1.veery.cloud
-    'dialerUrl': 'http://dialerapi.app1.veery.cloud/DVP/DialerAPI/ClickToCall/', //dialerapi.app1.veery.cloud
-    'agentDialerUrl': 'http://agentdialerservice.app1.veery.cloud/DVP/API/1.0.0.0/AgentDialer/', //agentdialerservice.app1.veery.cloud
-    'ipMessageURL': 'http://ipmessagingservice.app.veery.cloud/',//'http://ipmessagingservice.app.veery.cloud',
-    'templateUrl': 'http://templates.app1.veery.cloud/DVP/API/1.0.0.0/', //dialerapi.app1.veery.cloud
-    'cdrProcessor': 'http://cdrprocessor.app.veery.cloud/DVP/API/1.0.0.0/', //dialerapi.app1.veery.cloud
-    'articleServiceUrl': 'http://articleservice.app1.veery.cloud/DVP/API/1.0.0.0/'
+
+    'userServiceBaseUrl': 'http://userservice.facetone.lk/DVP/API/1.0.0.0/',
+    'externalUserServiceBaseUrl': 'http://externaluserservice.facetone.lk/DVP/API/1.0.0.0/',
+    'userGroupServiceBaseUrl': 'http://usergroupservice.facetone.lk/DVP/API/1.0.0.0/',
+    'organizationServiceBaseUrl': 'http://organizationservice.facetone.lk/DVP/API/1.0.0.0/',
+    'authServiceBaseUrl': 'http://authservice.facetone.lk/', //http://authservice.facetone.space/oauth/
+
+    'packageServiceBaseUrl': 'http://userservice.facetone.lk/DVP/API/1.0.0.0/',
+    'internal_user_service_base_url': 'http://userservice.facetone.lk/DVP/API/1.0.0.0/',
+    'notification': 'http://notificationservice.facetone.lk',
+    'ardsliteserviceUrl': 'http://ardsliteservice.facetone.lk/DVP/API/1.0.0.0/ARDS/',//ardsliteservice.facetone.lk
+    'engagementUrl': 'http://interactions.facetone.lk/DVP/API/1.0.0.0/',//interactions.facetone.lk
+    'ticketUrl': 'http://liteticket.facetone.lk/DVP/API/1.0.0.0/',//liteticket.facetone.lk
+    'ivrUrl': 'http://eventservice.facetone.lk/DVP/API/1.0.0.0/EventService/Events/SessionId/',
+    'mailInboxUrl': 'http://interactions.facetone.lk/DVP/API/1.0.0.0/Inbox/',
+    'ardsMonitoringServiceUrl': 'http://ardsmonitoring.facetone.lk/DVP/API/1.0.0.0/ARDS/MONITORING',
+    'fileService': 'http://fileservice.facetone.lk/DVP/API/1.0.0.0/',
+    'fileServiceInternalUrl': 'http://fileservice.facetone.lk/DVP/API/1.0.0.0/InternalFileService/',
+    'resourceService': 'http://resourceservice.facetone.lk/DVP/API/1.0.0.0/ResourceManager/', // http://resourceservice.facetone.lk
+    'dashBordUrl': 'http://dashboardservice.facetone.lk/',
+    'toDoUrl': 'http://todolistservice.facetone.lk/DVP/API/1.0.0.0/',    //todolistservice.facetone.lk
+    'monitorrestapi': 'http://monitorrestapi.facetone.lk/DVP/API/1.0.0.0/',//monitorrestapi.facetone.lk
+    'integrationapi': 'http://integrationapi.facetone.lk/DVP/API/1.0.0.0/IntegrationAPI/', //integrationapi.facetone.lk
+    'sipuserUrl': 'http://sipuserendpointservice.facetone.lk/DVP/API/1.0.0.0/', //sipuserendpointservice.facetone.lk
+    'pwdVerifyUrl': 'http://authservice.facetone.lk/auth/verify',
+    'qaModule': 'http://qamodule.facetone.lk/DVP/API/1.0.0.0/QAModule/',
+    'contactUrl': 'http://contacts.facetone.lk/DVP/API/1.0.0.0/ContactManager/', //contacts.facetone.lk
+    'dialerUrl': 'http://dialerapi.facetone.lk/DVP/DialerAPI/ClickToCall/', //dialerapi.facetone.lk
+    'agentDialerUrl': 'http://agentdialerservice.facetone.lk/DVP/API/1.0.0.0/AgentDialer/', //agentdialerservice.facetone.lk
+    'ipMessageURL': 'http://ipmessagingservice.facetone.lk/',//'http://ipmessagingservice.app.veery.cloud',
+    'templateUrl': 'http://templates.facetone.lk/DVP/API/1.0.0.0/', //dialerapi.facetone.lk
+    'cdrProcessor': 'http://cdrprocessor.facetone.lk/DVP/API/1.0.0.0/', //dialerapi.facetone.lk
+    'articleServiceUrl': 'http://articleservice.facetone.lk/DVP/API/1.0.0.0/'
 };
 
 // Config to validate initializing phone before putting call task 
@@ -164,7 +165,7 @@ agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider",
     function ($httpProvider, $stateProvider, $urlRouterProvider, $authProvider) {
 
 
-        var authProviderUrl = 'http://authservice.app1.veery.cloud/';
+        var authProviderUrl = 'http://authservice.facetone.lk/';
         $authProvider.loginUrl = authProviderUrl + 'auth/login';
         $authProvider.signupUrl = authProviderUrl + 'auth/signup';
 
