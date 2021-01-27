@@ -1448,7 +1448,7 @@ agentApp.controller('agentDashboardCtrl', function ($scope, $rootScope, $http, $
         }
     };
 
-    $scope.isMyQueue = false;
+    $scope.isMyQueue = true;
 
     $scope.changeQueueView = function (_queueView) {
         switch (_queueView) {
