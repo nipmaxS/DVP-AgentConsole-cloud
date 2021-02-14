@@ -16506,3 +16506,11 @@ timeline-event .outbound-panel-right:after {
 .full-btn{
     width: 100%;
 }
+
+.videoCall {
+    overflow:hidden;
+    height:100%;
+    width:100%;
+    min-height:800px;
+    border: none;
+}

@@ -18,12 +18,12 @@ var agentApp = angular.module('veeryAgentApp', ['ngRoute', 'ui', 'ui.bootstrap',
     'ngImgCrop', 'jkAngularRatingStars', 'rzModule', "chart.js",
     'angular-carousel', 'ngEmbed', 'ngEmojiPicker', 'luegg.directives',
     'angularProgressbar', 'cp.ngConfirm', 'angucomplete-alt', 'as.sortable',
-    'angular-timeline', 'angular-json-tree', 'ngDropover', 'angularAudioRecorder', 'ngAudio','cfp.hotkeys','ngIdle',"ngWebAudio",
-    "ngWebSocket","satellizer"
-]).filter('capitalize', function() {
-    return function(input, all) {
+    'angular-timeline', 'angular-json-tree', 'ngDropover', 'angularAudioRecorder', 'ngAudio', 'cfp.hotkeys', 'ngIdle', "ngWebAudio",
+    "ngWebSocket", "satellizer"
+]).filter('capitalize', function () {
+    return function (input, all) {
         var reg = (all) ? /([^\W_]+[^\s-]*) */g : /([^\W_]+[^\s-]*)/;
-        return (!!input) ? input.replace(reg, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}) : '';
+        return (!!input) ? input.replace(reg, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); }) : '';
     }
 });
 
@@ -38,48 +38,53 @@ agentApp.filter('durationFilter', function () {
 });
 //test
 var baseUrls = {
-    
-    'userServiceBaseUrl': 'http://userservice.app1.veery.cloud/DVP/API/1.0.0.0/',
-    'externalUserServiceBaseUrl': 'http://externaluserservice.app1.veery.cloud/DVP/API/1.0.0.0/',
-    'userGroupServiceBaseUrl': 'http://usergroupservice.facetone.space/DVP/API/1.0.0.0/',
-    'organizationServiceBaseUrl': 'http://localhost:9004/DVP/API/1.0.0.0/',
-    'authServiceBaseUrl': 'http://authservice.app1.veery.cloud/', //http://authservice.facetone.space/oauth/
-    
-    'packageServiceBaseUrl': 'http://userservice.app1.veery.cloud/DVP/API/1.0.0.0/',
-    'internal_user_service_base_url': 'http://userservice.app1.veery.cloud/DVP/API/1.0.0.0/',
-    'notification': 'http://notificationservice.app1.veery.cloud',
-    'ardsliteserviceUrl': 'http://ardsliteservice.app1.veery.cloud/DVP/API/1.0.0.0/ARDS/',//ardsliteservice.app1.veery.cloud
-    'engagementUrl': 'http://interactions.app1.veery.cloud/DVP/API/1.0.0.0/',//interactions.app1.veery.cloud
-    'ticketUrl': 'http://liteticket.app1.veery.cloud/DVP/API/1.0.0.0/',//liteticket.app1.veery.cloud
-    'ivrUrl': 'http://eventservice.app1.veery.cloud/DVP/API/1.0.0.0/EventService/Events/SessionId/',
-    'mailInboxUrl': 'http://interactions.app1.veery.cloud/DVP/API/1.0.0.0/Inbox/',
-    'ardsMonitoringServiceUrl': 'http://ardsmonitoring.app1.veery.cloud/DVP/API/1.0.0.0/ARDS/MONITORING',
-    'fileService': 'http://fileservice.app1.veery.cloud/DVP/API/1.0.0.0/',
-    'fileServiceInternalUrl': 'http://fileservice.app1.veery.cloud/DVP/API/1.0.0.0/InternalFileService/',
-    'resourceService': 'http://resourceservice.app1.veery.cloud/DVP/API/1.0.0.0/ResourceManager/', // http://resourceservice.app1.veery.cloud
-    'dashBordUrl': 'http://dashboardservice.app1.veery.cloud/',
-    'toDoUrl': 'http://todolistservice.app1.veery.cloud/DVP/API/1.0.0.0/',    //todolistservice.app1.veery.cloud
-    'monitorrestapi': 'http://monitorrestapi.app1.veery.cloud/DVP/API/1.0.0.0/',//monitorrestapi.app1.veery.cloud
-    'integrationapi': 'http://integrationapi.app.veery.cloud/DVP/API/1.0.0.0/IntegrationAPI/', //integrationapi.app1.veery.cloud
-    'sipuserUrl': 'http://sipuserendpointservice.app1.veery.cloud/DVP/API/1.0.0.0/', //sipuserendpointservice.app1.veery.cloud
-    'pwdVerifyUrl': 'http://userservice.app1.veery.cloud/auth/verify',
-    'qaModule': 'http://qamodule.app1.veery.cloud/DVP/API/1.0.0.0/QAModule/',
-    'contactUrl': 'http://contacts.app1.veery.cloud/DVP/API/1.0.0.0/ContactManager/', //contacts.app1.veery.cloud
-    'dialerUrl': 'http://dialerapi.app1.veery.cloud/DVP/DialerAPI/ClickToCall/', //dialerapi.app1.veery.cloud
-    'agentDialerUrl': 'http://agentdialerservice.app1.veery.cloud/DVP/API/1.0.0.0/AgentDialer/', //agentdialerservice.app1.veery.cloud
-    'ipMessageURL': 'http://ipmessagingservice.app.veery.cloud/',//'http://ipmessagingservice.app.veery.cloud',
-    'templateUrl': 'http://templates.app1.veery.cloud/DVP/API/1.0.0.0/', //dialerapi.app1.veery.cloud
-    'cdrProcessor': 'http://cdrprocessor.app.veery.cloud/DVP/API/1.0.0.0/', //dialerapi.app1.veery.cloud
-    'articleServiceUrl': 'http://articleservice.app1.veery.cloud/DVP/API/1.0.0.0/'
+    userServiceBaseUrl: "https://app.facetone.com:1443/DVP/API/1.0.0.0/",
+    externalUserServiceBaseUrl: "https://app.facetone.com:1443/DVP/API/1.0.0.0/",
+    userGroupServiceBaseUrl: "https://app.facetone.com:1443/DVP/API/1.0.0.0/",
+    organizationServiceBaseUrl: "https://app.facetone.com:1443/DVP/API/1.0.0.0/",
+    authServiceBaseUrl: "https://app.facetone.com:1443/", //http://authservice.facetone.space/oauth/
+
+    packageServiceBaseUrl: "https://app.facetone.com:1443/DVP/API/1.0.0.0/",
+    internal_user_service_base_url:
+        "https://app.facetone.com:1443/DVP/API/1.0.0.0/",
+    notification: "https://app.facetone.com:1443",
+    ardsliteserviceUrl: "https://app.facetone.com:1443/DVP/API/1.0.0.0/ARDS/", //ardsliteservice.app1.veery.cloud
+    engagementUrl: "https://app.facetone.com:1443/DVP/API/1.0.0.0/", //interactions.app1.veery.cloud
+    ticketUrl: "https://app.facetone.com:1443/DVP/API/1.0.0.0/", //liteticket.app1.veery.cloud
+    ivrUrl:
+        "https://app.facetone.com:1443/DVP/API/1.0.0.0/EventService/Events/SessionId/",
+    mailInboxUrl: "https://app.facetone.com:1443/DVP/API/1.0.0.0/Inbox/",
+    ardsMonitoringServiceUrl:
+        "https://app.facetone.com:1443/DVP/API/1.0.0.0/ARDS/MONITORING",
+    fileService: "https://app.facetone.com:1443/DVP/API/1.0.0.0/",
+    fileServiceInternalUrl:
+        "https://app.facetone.com:1443/DVP/API/1.0.0.0/InternalFileService/",
+    resourceService:
+        "https://app.facetone.com:1443/DVP/API/1.0.0.0/ResourceManager/", // http://resourceservice.app1.veery.cloud
+    dashBordUrl: "https://app.facetone.com:1443/",
+    toDoUrl: "https://app.facetone.com:1443/DVP/API/1.0.0.0/", //todolistservice.app1.veery.cloud
+    monitorrestapi: "https://app.facetone.com:1443/DVP/API/1.0.0.0/", //monitorrestapi.app1.veery.cloud
+    integrationapi:
+        "https://app.facetone.com:1443/DVP/API/1.0.0.0/IntegrationAPI/", //integrationapi.app1.veery.cloud
+    sipuserUrl: "https://app.facetone.com:1443/DVP/API/1.0.0.0/", //sipuserendpointservice.app1.veery.cloud
+    pwdVerifyUrl: "https://app.facetone.com:1443/auth/verify",
+    qaModule: "https://app.facetone.com:1443/DVP/API/1.0.0.0/QAModule/",
+    contactUrl: "https://app.facetone.com:1443/DVP/API/1.0.0.0/ContactManager/", //contacts.app1.veery.cloud
+    dialerUrl: "https://app.facetone.com:1443/DVP/DialerAPI/ClickToCall/", //dialerapi.app1.veery.cloud
+    agentDialerUrl: "https://app.facetone.com:1443/DVP/API/1.0.0.0/AgentDialer/", //agentdialerservice.app1.veery.cloud
+    ipMessageURL: "https://app.facetone.com:90/", //'http://ipmessagingservice.app.veery.cloud',
+    templateUrl: "https://app.facetone.com:1443/DVP/API/1.0.0.0/", //dialerapi.app1.veery.cloud
+    cdrProcessor: "https://app.facetone.com:1443/API/1.0.0.0/", //dialerapi.app1.veery.cloud
+    articleServiceUrl: "https://app.facetone.com:1443/DVP/API/1.0.0.0/",
 };
 
 // Config to validate initializing phone before putting call task 
 //var checkPhonestOnTasks=false;
-var checkPhonestOnTasks=true;
+var checkPhonestOnTasks = true;
 
 var recordingTime = 20;
 
-agentApp.constant('checkPhonestOnTasks',checkPhonestOnTasks);
+agentApp.constant('checkPhonestOnTasks', checkPhonestOnTasks);
 
 agentApp.constant('baseUrls', baseUrls);
 agentApp.constant('recordingTime', recordingTime);
@@ -97,29 +102,29 @@ agentApp.constant('turnServers', [{
 //{url:"turn:turn@172.16.11.133:80",credential:"DuoS123"}
 
 var tabConfig = {
-    'alertValue':5,
-    'warningValue':8,
+    'alertValue': 5,
+    'warningValue': 8,
     'maxTabLimit': 10
 };
-agentApp.constant('tabConfig',tabConfig);
+agentApp.constant('tabConfig', tabConfig);
 
 var status_sync = {
-    'enable':true,
-    'validate_interval':2000,
-    're_validate_interval':1000
+    'enable': true,
+    'validate_interval': 2000,
+    're_validate_interval': 1000
 };
-agentApp.constant('status_sync',status_sync);
+agentApp.constant('status_sync', status_sync);
 
 
 var consoleConfig = {
-    'maximumAllowedIdleTime':40, //5
-    'graceperiod':10 //5 /*must be less than maximumAllowedIdleTime*/
+    'maximumAllowedIdleTime': 40, //5
+    'graceperiod': 10 //5 /*must be less than maximumAllowedIdleTime*/
 };
-agentApp.constant('consoleConfig',consoleConfig);
+agentApp.constant('consoleConfig', consoleConfig);
 
 var phoneSetting = {
     'phone_communication_strategy': "veery_web_rtc_phone",
-    'Bandwidth':undefined,
+    'Bandwidth': undefined,
     'TransferPhnCode': '*6',
     'TransferExtCode': '*3',
     'TransferIvrCode': '*9',
@@ -127,14 +132,14 @@ var phoneSetting = {
     'SwapCode': '1',
     'ConferenceCode': '0',
     'ExtNumberLength': 6,
-    'AcwCountdown':5,
-    "ReRegisterTimeout":2000,
-    'ReRegisterTryCount':5,
-    'PreviewTime':30,
-    'webrtc':{
-        'protocol':'wss',
-        'host':undefined ,//"oversip.voice.veery.cloud", //undefined  oversip.voice.veery.cloud
-        'port':10443
+    'AcwCountdown': 5,
+    "ReRegisterTimeout": 2000,
+    'ReRegisterTryCount': 5,
+    'PreviewTime': 30,
+    'webrtc': {
+        'protocol': 'wss',
+        'host': undefined,//"oversip.voice.veery.cloud", //undefined  oversip.voice.veery.cloud
+        'port': 10443
     }
 
 };
@@ -164,7 +169,7 @@ agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider",
     function ($httpProvider, $stateProvider, $urlRouterProvider, $authProvider) {
 
 
-        var authProviderUrl = 'http://authservice.app1.veery.cloud/';
+        var authProviderUrl = 'https://app.facetone.com:1443/';
         $authProvider.loginUrl = authProviderUrl + 'auth/login';
         $authProvider.signupUrl = authProviderUrl + 'auth/signup';
 
@@ -172,14 +177,14 @@ agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider",
         $authProvider.facebook({
             url: authProviderUrl + 'auth/facebook',
             clientId: '1237176756312189',
-            redirectUri: window.location.origin+'/DVP-AgentConsole/index.html'
+            redirectUri: window.location.origin + '/DVP-AgentConsole/index.html'
             //responseType: 'token'
         });
 
         $authProvider.google({
             url: authProviderUrl + 'auth/google',
             clientId: '260058487091-ko7gcp33dijq6e3b8omgbg1f1nfh2nsk.apps.googleusercontent.com',
-            redirectUri: window.location.origin+'/DVP-AgentConsole/index.html'
+            redirectUri: window.location.origin + '/DVP-AgentConsole/index.html'
         });
 
         $authProvider.oauth2({
@@ -190,7 +195,7 @@ agentApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider",
             authorizationEndpoint: 'https://foursquare.com/oauth2/authenticate',
         });
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         $stateProvider.state("console", {
             url: "/console",
             templateUrl: "app/views/console-view.html",
@@ -252,7 +257,7 @@ agentApp.constant('config', {
 });
 
 //Authentication
-agentApp.run(function ($rootScope, identity_service, $location, $state, $document,$window,Idle) {
+agentApp.run(function ($rootScope, identity_service, $location, $state, $document, $window, Idle) {
     Idle.watch();
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
         var requireLogin = toState.data.requireLogin;
@@ -272,10 +277,10 @@ agentApp.run(function ($rootScope, identity_service, $location, $state, $documen
     }
 
 
-    angular.element($window).bind('focus', function() {
+    angular.element($window).bind('focus', function () {
 
         console.log('Console Focus......................');
-    }).bind('blur', function() {
+    }).bind('blur', function () {
 
         console.log('Console Lost Focus......................');
     });
@@ -595,28 +600,28 @@ agentApp.directive('passwordStrengthBox', [
                 }, true);
             },
             template: '<div ng-if="strength != ' + 5 + ' "' +
-            'ng-show=strength' +
-            ' class="password-leg-wrapper login-lg-wrapper animated fadeIn ">' +
-            '<ul>' +
-            '<li>' +
-            '<i ng-show="isPwdValidation.minLength" class="ti-check color-green"></i>' +
-            '<i ng-show="!isPwdValidation.minLength" class="ti-close color-red"></i>' +
-            ' Min length 8' +
-            '</li>' +
-            '<li><i ng-show="isPwdValidation.specialChr" class="ti-check color-green "></i>' +
-            '<i ng-show="!isPwdValidation.specialChr" class="ti-close color-red"></i>' +
-            ' Special Character' +
-            '</li>' +
-            '<li><i ng-show="isPwdValidation.digit" class="ti-check color-green"></i>' +
-            '<i ng-show="!isPwdValidation.digit" class="ti-close color-red"></i>' +
-            ' Digit' +
-            '</li>' +
-            '<li><i ng-show="isPwdValidation.capitalLetter" class="ti-check color-green"></i>' +
-            '<i ng-show="!isPwdValidation.capitalLetter" class="ti-close color-red"></i>' +
-            ' Capital Letter' +
-            ' </li>' +
-            '</ul>' +
-            '</div>'
+                'ng-show=strength' +
+                ' class="password-leg-wrapper login-lg-wrapper animated fadeIn ">' +
+                '<ul>' +
+                '<li>' +
+                '<i ng-show="isPwdValidation.minLength" class="ti-check color-green"></i>' +
+                '<i ng-show="!isPwdValidation.minLength" class="ti-close color-red"></i>' +
+                ' Min length 8' +
+                '</li>' +
+                '<li><i ng-show="isPwdValidation.specialChr" class="ti-check color-green "></i>' +
+                '<i ng-show="!isPwdValidation.specialChr" class="ti-close color-red"></i>' +
+                ' Special Character' +
+                '</li>' +
+                '<li><i ng-show="isPwdValidation.digit" class="ti-check color-green"></i>' +
+                '<i ng-show="!isPwdValidation.digit" class="ti-close color-red"></i>' +
+                ' Digit' +
+                '</li>' +
+                '<li><i ng-show="isPwdValidation.capitalLetter" class="ti-check color-green"></i>' +
+                '<i ng-show="!isPwdValidation.capitalLetter" class="ti-close color-red"></i>' +
+                ' Capital Letter' +
+                ' </li>' +
+                '</ul>' +
+                '</div>'
         }
     }
 ]);
@@ -638,6 +643,18 @@ agentApp.directive('datepicker', function () {
                 }
             };
             elem.datepicker(options);
+        }
+    }
+});
+
+agentApp.directive("ngLoad", function () {
+    return {
+        restrict: "A",
+        scope: { callback: "&" },
+        link: function (n, c, a) {
+            c.bind("load", function () {
+                n.callback()
+            })
         }
     }
 });

@@ -5,7 +5,8 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
                                              profileDataParser, identity_service, $state, uuid4,
                                              filterFilter, engagementService, phoneSetting, toDoService, turnServers,
                                              Pubnub, $uibModal, agentSettingFact, chatService, contactService, userProfileApiAccess, $anchorScroll, notificationService, $ngConfirm,
-                                             templateService, userImageList, integrationAPIService, hotkeys, tabConfig, consoleConfig, Idle, localStorageService, WebAudio, shared_data, shared_function, package_service, internal_user_service, ivrService, versionController) {
+                                             templateService, userImageList, integrationAPIService, hotkeys, tabConfig, consoleConfig, Idle, localStorageService, WebAudio, shared_data, 
+                                             shared_function, package_service, internal_user_service, ivrService, versionController) {
 
     $scope.version = versionController.version;
 
@@ -20,6 +21,14 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
     }).catch(function (err) {
         console.log(err);
     });
+
+    window.addEventListener('OpenVideoCall', function() {
+        $scope.openVideoCall();
+    });
+
+    $scope.videoCallUILoaded = function() {
+        window.dispatchEvent(new Event("OpenedVideoCall"));
+    }
 
     // -------------------- ringtone config -------------------------------------
     /* var options = {
@@ -322,6 +331,16 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
             $scope.addMyNote();
         }
     });
+
+    hotkeys.add({
+        combo: 'ctrl+alt+v',
+        description: 'openVideoCall',
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        callback: function () {
+            $scope.openVideoCall();
+        }
+    });
+
     hotkeys.add({
         combo: 'ctrl+alt+x',
         description: 'addDashBoard',
@@ -2497,10 +2516,16 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
 
     };
 
-//add myquick note inside tab
+    //add myquick note inside tab
     $scope.addMyNote = function () {
         $('#consoleBody').removeClass('disable-scroll');
         $scope.addTab('MyNote', 'MyNote', 'MyNote', "MyNote", "MyNote");
+    };
+
+    // openVideoCall inside tab
+    $scope.openVideoCall = function () {
+        //$('#consoleBody').removeClass('disable-scroll');
+        $scope.addTab('Video Call', 'VideoCall', 'VideoCall', "VideoCall", "VideoCall");
     };
 
     //add setting tab

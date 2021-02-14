@@ -2,7 +2,7 @@
  * Created by Rajinda Waruna on 25/04/2018.
  */
 
-agentApp.controller('call_notifications_controller', function ($rootScope, $scope, $timeout, $ngConfirm, jwtHelper, $crypto, $filter, hotkeys, authService, veery_phone_api, shared_data, shared_function, WebAudio, chatService, status_sync, resourceService, phoneSetting, profileDataParser,tabConfig) {
+agentApp.controller('call_notifications_controller', function ($rootScope, $scope, $timeout, $ngConfirm, jwtHelper, $crypto, $filter, hotkeys, authService, veery_phone_api, shared_data, shared_function, WebAudio, chatService, status_sync, resourceService, phoneSetting, profileDataParser, tabConfig) {
 
     /*----------------------------enable shortcut keys-----------------------------------------------*/
 
@@ -229,7 +229,7 @@ agentApp.controller('call_notifications_controller', function ($rootScope, $scop
         if (this.$root) {
             var phase = this.$root.$$phase;
             if (phase == '$apply' || phase == '$digest') {
-                if (fn && (typeof(fn) === 'function')) {
+                if (fn && (typeof (fn) === 'function')) {
                     fn();
                 }
             } else {
@@ -472,13 +472,13 @@ agentApp.controller('call_notifications_controller', function ($rootScope, $scop
             }
 
             console.log("------------------------- Make call clicked  -------------------------");
-            if (number === "" || number===undefined) {
+            if (number === "" || number === undefined) {
                 //shared_function.showAlert("Soft Phone", "error", "Please Enter Number To Dial.");
-                $scope.notification_call =  $scope.callLog[$scope.callLog.length - 1];
+                $scope.notification_call = $scope.callLog[$scope.callLog.length - 1];
                 document.getElementById("call_notification_outbound_btn").disabled = false;
-                if($scope.notification_call.number  === "" || $scope.notification_call.number===undefined){
+                if ($scope.notification_call.number === "" || $scope.notification_call.number === undefined) {
                     shared_function.showAlert("Soft Phone", "error", "Please Enter Number To Dial.");
-                }else{
+                } else {
 
                     shared_function.showAlert("Soft Phone", "notice", "Reload Last Dialed Number.");
                 }
@@ -772,15 +772,14 @@ agentApp.controller('call_notifications_controller', function ($rootScope, $scop
         ReciveCallInfo: function (data, Number) {
             try {
                 console.log("----------------------- ReciveCallInfo -----------------------------\n %s \n----------------------- ReciveCallInfo -----------------------------", JSON.stringify(data));
-                if(data){
+                if (data) {
                     var skilData = undefined;
                     var sessionData = undefined;
 
 
                     data.map(function (item) {
-                        if(item && item.s_name)
-                        {
-                            switch (item.s_name.toLowerCase()){
+                        if (item && item.s_name) {
+                            switch (item.s_name.toLowerCase()) {
                                 case "x-skill":
                                     $scope.notification_call.skill = item.s_value;
                                     skilData = item.s_value;
@@ -790,7 +789,7 @@ agentApp.controller('call_notifications_controller', function ($rootScope, $scop
                                     sessionData = item.s_value;
                                     break;
                                 case "x-callingnumber":
-                                    $scope.notification_call.CompanyNo= item.s_value;
+                                    $scope.notification_call.CompanyNo = item.s_value;
                                     break;
                             }
 
@@ -798,8 +797,8 @@ agentApp.controller('call_notifications_controller', function ($rootScope, $scop
                         }
                     });
 
-                    console.log("----------------------- ReciveCallInfo -----------------------------\n %s \n %s \n----------------------- ReciveCallInfo -----------------------------", skilData,sessionData);
-                    if(skilData && sessionData ){
+                    console.log("----------------------- ReciveCallInfo -----------------------------\n %s \n %s \n----------------------- ReciveCallInfo -----------------------------", skilData, sessionData);
+                    if (skilData && sessionData) {
 
                         $scope.sayIt("you are receiving " + skilData + " call");
 
@@ -811,18 +810,17 @@ agentApp.controller('call_notifications_controller', function ($rootScope, $scop
                             skill: $scope.notification_call.skill,
                             engagement_id: $scope.notification_call.sessionId,
                             displayName: Number,
-                            index:$scope.notification_call.sessionId,
-                            tabType : 'engagement'
+                            index: $scope.notification_call.sessionId,
+                            tabType: 'engagement'
                         };
 
-                        if(profileDataParser.is_tab_open($scope.notification_call.sessionId))
-                        {
-                            console.log("----------------------- ReciveCallInfo -----------------------------\n %s \n %s \n----------------------- ReciveCallInfo -----------------------------", "Open Tab By Agent Found - SIP data Avoided ",sessionData);
+                        if (profileDataParser.is_tab_open($scope.notification_call.sessionId)) {
+                            console.log("----------------------- ReciveCallInfo -----------------------------\n %s \n %s \n----------------------- ReciveCallInfo -----------------------------", "Open Tab By Agent Found - SIP data Avoided ", sessionData);
                             return;
                         }
                         profileDataParser.RecentEngagements.push($scope.notification_call.sessionId);
                         $rootScope.$emit('openNewTab', notifyData);
-                        console.log("----------------------- ReciveCallInfo -----------------------------\n %s \n %s \n----------------------- ReciveCallInfo -----------------------------", "Open Tab Using SIP Data",JSON.stringify(notifyData));
+                        console.log("----------------------- ReciveCallInfo -----------------------------\n %s \n %s \n----------------------- ReciveCallInfo -----------------------------", "Open Tab Using SIP Data", JSON.stringify(notifyData));
                     }
 
 
@@ -847,7 +845,7 @@ agentApp.controller('call_notifications_controller', function ($rootScope, $scop
             shared_function.showAlert('Phone', 'error', msg);
             shared_function.showWarningAlert(title, msg);
             phone_status = "phone_offline";
-            shared_data.phone_initialize = false;shared_data.phone_initializing = false;
+            shared_data.phone_initialize = false; shared_data.phone_initializing = false;
             $('#answerButton').removeClass('phone-sm-btn answer').addClass('display-none');
             resourceService.RemoveSharing(authService.GetResourceId(), "call").then(function (data) {
                 if (data && data.IsSuccess) {
@@ -971,7 +969,7 @@ agentApp.controller('call_notifications_controller', function ($rootScope, $scop
                 document.getElementById("call_notification_outbound_btn").disabled = false;
             }
 
-//$scope.$apply();
+            //$scope.$apply();
             $scope.notification_panel_phone.reset_call_details();
             stopRingTone();
             chatService.Status('available', 'call');
@@ -1203,7 +1201,7 @@ agentApp.controller('call_notifications_controller', function ($rootScope, $scop
                 call_duration_webrtc_timer.reset();
                 call_duration_webrtc_timer.stop();
                 $('#call_notification_call_duration_webrtc_timer').html("00:00:00");
-                acw_countdown_web_rtc_timer.start({countdown: true, startValues: {seconds: shared_data.acw_time}});
+                acw_countdown_web_rtc_timer.start({ countdown: true, startValues: { seconds: shared_data.acw_time } });
                 $('#call_notification_acw_countdown_web_rtc_timer.values').html(acw_countdown_web_rtc_timer.getTimeValues().toString());
 
             }
@@ -1221,7 +1219,7 @@ agentApp.controller('call_notifications_controller', function ($rootScope, $scop
                 $('#call_notification_acw').removeClass('display-none');
 
 
-                acw_countdown_timer.start({countdown: true, startValues: {seconds: shared_data.acw_time}});
+                acw_countdown_timer.start({ countdown: true, startValues: { seconds: shared_data.acw_time } });
                 $('#call_notification_acw_countdown_timer .values').html(acw_countdown_timer.getTimeValues().toString());
             }
             $scope.isAcw = true;
@@ -1253,6 +1251,28 @@ agentApp.controller('call_notifications_controller', function ($rootScope, $scop
             }
 
             phone_status = "call_unmute";
+        },
+        video_on: function () {
+            // if (shared_data.phone_strategy === "veery_web_rtc_phone") {
+            //     $('#speakerMuteButton').removeClass('display-none');
+            //     $('#speakerUnmuteButton').addClass('display-none');
+            // } else {
+            //     $('#call_notification_call_unmute_btn').addClass('display-none');
+            //     $('#call_notification_call_mute_btn').removeClass('display-none');
+            // }
+
+            // phone_status = "call_unmute";
+        },
+        video_off: function () {
+            // if (shared_data.phone_strategy === "veery_web_rtc_phone") {
+            //     $('#speakerMuteButton').removeClass('display-none');
+            //     $('#speakerUnmuteButton').addClass('display-none');
+            // } else {
+            //     $('#call_notification_call_unmute_btn').addClass('display-none');
+            //     $('#call_notification_call_mute_btn').removeClass('display-none');
+            // }
+
+            // phone_status = "call_unmute";
         },
         call_hold: function () {
             if (shared_data.phone_strategy === "veery_web_rtc_phone") {
@@ -1573,7 +1593,7 @@ agentApp.controller('call_notifications_controller', function ($rootScope, $scop
 
         },
         onError: function (event) {
-            if (sipConnectionLostCount==2){
+            if (sipConnectionLostCount == 2) {
                 notification_panel_ui_state.phone_operation_error('Connection Interrupted');
             }
             veery_api_key === undefined;
@@ -1635,7 +1655,7 @@ agentApp.controller('call_notifications_controller', function ($rootScope, $scop
                     call_in_progress = false;
                     call_transfer_progress = false;
 
-                    if(shared_data.phone_config && shared_data.phone_config.autoAnswer){
+                    if (shared_data.phone_config && shared_data.phone_config.autoAnswer) {
                         veery_phone_api.autoAnswer(veery_api_key, shared_data.phone_config.autoAnswerDelay);
                     }
 
@@ -1744,6 +1764,18 @@ agentApp.controller('call_notifications_controller', function ($rootScope, $scop
                 case 'Unauthorized':
                     shared_function.showWarningAlert("Unauthorized", data.description);
                     break;
+                case 'InitFrame':
+                    veery_phone_api.initFrame(data.isVideo);
+                    break;
+                case 'SetStrategy':
+                    veery_phone_api.setActiveStrategy(data.isVideo);
+                    break;
+                case 'VideoOn':
+                    notification_panel_ui_state.video_on();
+                    break;
+                case 'VideoOff':
+                    notification_panel_ui_state.video_off();
+                    break;
                 default:
 
             }
@@ -1774,7 +1806,7 @@ agentApp.controller('call_notifications_controller', function ($rootScope, $scop
                     if (response && response.ConcurrencyInfo && response.ResourceStatus) {
                         var status_match = false;
                         if (response.ConcurrencyInfo.SlotInfo) {
-                            var tempData = $filter('filter')(response.ConcurrencyInfo.SlotInfo, {"HandlingType": "CALL"}, true);
+                            var tempData = $filter('filter')(response.ConcurrencyInfo.SlotInfo, { "HandlingType": "CALL" }, true);
                             if (tempData && tempData.any()) {
                                 status_match = tempData.State === shared_data.agent_status;
                             }
@@ -1878,7 +1910,7 @@ agentApp.controller('call_notifications_controller', function ($rootScope, $scop
                             case "Suspended":
                                 if (shared_data.agent_status === "Suspended")
                                     return;
-                                var data = {Message: "Reject Count Exceeded!, Account Suspended for Task: CALL"};
+                                var data = { Message: "Reject Count Exceeded!, Account Suspended for Task: CALL" };
                                 console.error("----------------------- Status[mode] Mismatch, Reject Count Exceeded!, Account Suspended for Task: CALL-----------------------------" + agent_status_mismatch_count);
                                 notification_panel_ui_state.agent_suspended(data);
                                 break;
@@ -1986,6 +2018,7 @@ agentApp.controller('call_notifications_controller', function ($rootScope, $scop
         }*/
         shared_data.phone_initializing = true;
         veery_phone_api.setStrategy(shared_data.phone_strategy);
+        veery_phone_api.setVideoStrategy('veery_video_phone');
         notification_panel_ui_state.phoneLoading();
         veery_phone_api.subscribeEvents(subscribeEvents);
     };
@@ -2199,7 +2232,7 @@ agentApp.controller('call_notifications_controller', function ($rootScope, $scop
             veery_api_key = "";
             agent_status_mismatch_count = 0;
             sipConnectionLostCount = 0;
-           // initialize_phone();
+            // initialize_phone();
         }
     });
 

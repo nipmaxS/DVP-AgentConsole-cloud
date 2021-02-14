@@ -480,6 +480,14 @@
                     </div>
                 </li>
 
+                 <!-- Video Call --->
+                 <li ng-class="activeTab.viewType == 'VideoCall'?'selected-tab':''" ng-show="accessNavigation.AGENT_SOFTPHONE">
+                    <div class="left-icon animated slideInLeft">
+                        <i ng-click="openVideoCall();"
+                           class="fa fa-video-camera small-icon offline-phone" title="Video Call [Ctrl+Alt+V]"></i>
+                    </div>
+                </li>
+
                 <!--call log-->
                 <li id="call_logs" style="padding-top: 4px" class="display-none" ng-show="accessNavigation.AGENT_CONTACT_LIST">
                     <div class="left-icon animated slideInLeft">
@@ -736,6 +744,9 @@
                         </div>
                         <div ng-switch-when="MyNote">
                             <div ng-include="'app/views/myNote/my-remeider-note.html'"></div>
+                        </div>
+                        <div ng-switch-when="VideoCall">
+                            <div ng-include="'app/views/video-call/video-call.html'"></div>
                         </div>
                         <div ng-switch-when="new-profile">
                             <div
