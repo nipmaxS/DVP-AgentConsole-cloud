@@ -4,12 +4,20 @@
 
 agentApp.factory('veery_video_phone', function (videoFrameComService, authService) {
     var ui_events = {};
-    videoFrameComService.onMessage(function (message) {
+    videoFrameComService.onMessage(function (messageStr) {
+        let message = JSON.parse(messageStr);
+
         if (ui_events.onMessage) {
-            switch (message) {
+            switch (message.type) {
                 case "IncomingCall":
                     ui_events.onMessage(getUIEvent({ veery_command: "SetStrategy", isVideo: true }));
-                    ui_events.onMessage(getUIEvent({ veery_command: "IncomingCall" }));
+                    ui_events.onMessage(getUIEvent({ veery_command: "IncomingCall", number:  message.body.cid_number}));
+
+                    // var msg = {
+                    //     "veery_command": "IncomingCall",
+                    //     "description": "IncomingCall - " + sRemoteNumber,
+                    //     "number": sRemoteNumber
+                    // };
                     // switch to video page
                     window.dispatchEvent(new Event("OpenVideoCall"));
                     break;
@@ -56,7 +64,7 @@ agentApp.factory('veery_video_phone', function (videoFrameComService, authServic
         },
         initFrame: function () {
             let frame = $('iframe').get(0);
-            let domain = "http://127.0.0.1:8082";
+            let domain = baseUrls.videoCallDomain;
             let token = authService.TokenWithoutBearer();
             videoFrameComService.initFrame(frame, domain, token);
         },

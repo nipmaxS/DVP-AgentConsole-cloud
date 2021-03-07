@@ -76,6 +76,8 @@ var baseUrls = {
     templateUrl: "https://app.facetone.com:1443/DVP/API/1.0.0.0/", //dialerapi.app1.veery.cloud
     cdrProcessor: "https://app.facetone.com:1443/API/1.0.0.0/", //dialerapi.app1.veery.cloud
     articleServiceUrl: "https://app.facetone.com:1443/DVP/API/1.0.0.0/",
+    videoCallUrl: "http://localhost:4200/#/video-call/embedded",
+    videoCallDomain: "http://localhost:4200"
 };
 
 // Config to validate initializing phone before putting call task 

@@ -1,4 +1,4 @@
-agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scope, $http,
+agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scope, $http, $sce, 
                                              $base64, $timeout, $q, $crypto, jwtHelper,
                                              resourceService, baseUrls, authService,
                                              userService, tagService, ticketService, mailInboxService, $interval,
@@ -29,6 +29,8 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
     $scope.videoCallUILoaded = function() {
         window.dispatchEvent(new Event("OpenedVideoCall"));
     }
+
+    $scope.videoCallUrl = $sce.trustAsResourceUrl(`${baseUrls.videoCallUrl}?auth-token=${authService.TokenWithoutBearer()}`);
 
     // -------------------- ringtone config -------------------------------------
     /* var options = {
