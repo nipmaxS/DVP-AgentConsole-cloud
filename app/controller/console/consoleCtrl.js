@@ -5618,6 +5618,9 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
                 useBootstrap: true
             });
 
+            var audio = new Audio('assets/sounds/idle.mp3');
+            audio.play();
+
             showNotification("Maximum Allowed Idle Time Exceeded. You Will be Automatically Logged out in " + consoleConfig.graceperiod + " Minutes.", 15000);
         }
     });
