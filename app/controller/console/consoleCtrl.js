@@ -1033,7 +1033,7 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
             showNotification("Hello " + $scope.firstName + " you are allocated to campaign call", 10000);
 
             timer = $timeout(function () {
-                $scope.dialerMessage.sendPreviewReply($scope.previewMessage.Tkey, 'REJECT')
+                $scope.dialerMessage.sendPreviewReply($scope.previewMessage.Tkey, 'PREVIEW_TIMEOUT')
             }, phoneSetting.PreviewTime * 1000);
         }
     };
@@ -4176,20 +4176,55 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
 
     $scope.breakOption = {
         changeBreakOption: function (requestOption) {
+            $scope.resourceTaskObj.forEach(function (val) {
+                if (val.task.toLowerCase() == 'call' && val.RegTask && val.RegTask.toLowerCase() == "call") {
+                    shared_data.previousTask = 'CALL';
+                }
+            });
+            shared_data.previousModeOption = shared_data.currentModeOption;
 
+            if(shared_data.currentModeOption=='Outbound') {
+                resourceService.RemoveSharing(authService.GetResourceId(), 'CALL').then(function (data) {
+                    console.log('********REMOVE SHARING*********');
+                    resourceService.BreakRequest(authService.GetResourceId(), requestOption).then(function (res) {
+                        if (res.IsSuccess) {
+                            $scope.currentBreak = requestOption;
+                            $('#loginScreeen').removeClass('display-none').addClass('display-block');
+                            $('body').addClass('overflow-hidden');
+                            shared_data.userProfile = $scope.profile;
+                            breakList.forEach(function (option) {
+                                $(option).removeClass('font-color-green bold');
+                            });
+
+                            $scope.breakTimeStart = moment.utc();
+                            document.getElementById('lockTime').getElementsByTagName('timer')[0].resume();
+
+
+                            $('#userStatus').addClass('offline').removeClass('online');
+                            $scope.showAlert(requestOption, "success", 'update resource state success');
+                            $('#' + requestOption).addClass('font-color-green bold');
+                            $scope.currentBerekOption = requestOption;
+                            $scope.agentInBreak = true;
+                            chatService.Status('offline', 'chat');
+                            chatService.Status('offline', 'call');
+                            shared_data.agent_status = "Break";
+                            shared_data.allow_mode_change = false;
+                        } else {
+                            $scope.showAlert(requestOption, "warn", 'break request failed');
+                        }
+                    }, function (error) {
+                        authService.IsCheckResponse(error);
+                        $scope.showAlert("Break Request", "error", "Fail To Register With " + requestOption);
+                    });
+                }, function (error) {
+                    authService.IsCheckResponse(error);
+                    $scope.showAlert("Agent Task", "error", "Fail To remove sharing resource.");
+                });
+            }
 
             resourceService.BreakRequest(authService.GetResourceId(), requestOption).then(function (res) {
                 if (res.IsSuccess) {
-                    shared_data.previousModeOption = shared_data.currentModeOption;
                     $scope.currentBreak = requestOption;
-                    if(shared_data.currentModeOption=='Outbound') {
-                        resourceService.RemoveSharing(authService.GetResourceId(), 'CALL').then(function (data) {
-                            console.log('********REMOVE SHARING*********')
-                        }, function (error) {
-                            authService.IsCheckResponse(error);
-                            $scope.showAlert("Agent Task", "error", "Fail To remove sharing resource.");
-                        });
-                    }
                     $('#loginScreeen').removeClass('display-none').addClass('display-block');
                     $('body').addClass('overflow-hidden');
                     shared_data.userProfile = $scope.profile;
@@ -4238,10 +4273,27 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
                     if (shared_data.phone_initialize) {
                         chatService.Status('available', 'call');
                     }
-                    console.log(shared_data.previousModeOption);
+                    console.log("MODE : "+shared_data.previousModeOption);
+                    console.log("TASK : "+shared_data.previousTask);
                     if(shared_data.previousModeOption=='Outbound'){
-                        console.log("Outbound : "+ shared_data.previousModeOption);
-                        $scope.modeOption.outboundOption('Outbound');
+                        userService.GetContactVeeryFormat().then(function (res) {
+                            if (res.IsSuccess) {
+                                resourceService.ChangeRegisterStatus(authService.GetResourceId(), shared_data.previousTask, res.Result, profileDataParser.myBusinessUnit).then(function (data) {
+                                    getCurrentState.getCurrentRegisterTask();
+                                    getCurrentState.breakState();
+                                    console.log("Outbound : "+ shared_data.previousModeOption);
+                                    $scope.modeOption.outboundOption('Outbound');
+                                    $scope.showAlert("Change Register", "success", "Register resource info success.");
+                                    $('#regStatusNone').removeClass('task-none').addClass('reg-status-done');
+
+                                })
+                            } else {
+                                console.log(data);
+                            }
+                        }, function (error) {
+                            authService.IsCheckResponse(error);
+                            $scope.showAlert("Change Register", "error", "Fail To Register..!");
+                        });
                     }
                     //chatService.Status('online', 'call');
                     $rootScope.$emit("execute_command", {
@@ -5637,6 +5689,13 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
 
     Idle.watch();
 
+    var init = function () {
+        resourceService.RemoveSharing(authService.GetResourceId(), 'CALL').then(function (data) {
+            console.log('********REMOVE SHARING*********');
+        });
+    };
+
+    init();
 
     $scope.loadFiledAccessConfig = function () {
 
