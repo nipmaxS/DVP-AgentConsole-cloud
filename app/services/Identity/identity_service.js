@@ -161,7 +161,7 @@
 
 
         function resetPassword(token, password, callback) {
-            $http.post(baseUrls.authServiceBaseUrl + "/auth/reset/"+token, {password: password}).success(function (data, status, headers, config) {
+            $http.post(baseUrls.authServiceBaseUrl + "auth/reset/"+token, {password: password}).success(function (data, status, headers, config) {
                 callback(data.IsSuccess);
 
             }).error(function (data, status, headers, config) {
