@@ -1434,7 +1434,7 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
         $scope.isSocketRegistered = true;
         // $('#regNotificationLoading').addClass('display-none').removeClass('display-block');
         //$('#regNotification').addClass('display-block').removeClass('display-none');
-        $scope.showAlert("Registration succeeded", "success", "Registered with notifications");
+        //$scope.showAlert("Registration succeeded", "success", "Registered with notifications");
         $('#notifConnectivityError').removeClass('task-incoming').addClass('display-none');
 
     };
