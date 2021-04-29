@@ -46,6 +46,27 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope,$q, $
 
     $scope.playFile = function (id, ticket) {
 
+        //ticket play button fix START addedby_Rushaid
+        if(id){
+            ticketService.getSpecificRecordByUuid(id).then(function (response) {
+                if (response.data.IsSuccess) {
+                    //direction
+                   if( response.data.DVPCallDirection === 'outbound'){
+                        id = response.data.bridgeUuid;
+                   }else{
+                    $scope.showAlert("Inbound Ticket", "Playing", "Ticket recording will be played");
+                   }
+                }
+                else {
+                    $scope.showAlert("Error", "error", "Failed get response");
+                }
+    
+            }), function (error) {
+                $scope.showAlert("Error", "error", "Failed get response");
+            }
+        }
+        //ticket play button fix END addedby_Rushaid
+
         if (videogularAPI && id) {
             var info = authService.GetCompanyInfo();
             var fileToPlay = baseUrls.fileService + 'FileService/File/DownloadLatest/' + id + '.mp3';

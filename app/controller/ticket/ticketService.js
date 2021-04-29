@@ -5,6 +5,24 @@
 agentApp.factory("ticketService", function ($http, baseUrls, authService) {
 
 
+    //added_by_rushaid_12_01_2021
+    //get cdr for relavent session where ticket is saved
+    var getSpecificRecordByUuid = function (uuid) {
+        return $http({
+            method: 'get',
+            //"/DVP/API/:version/CallCDR/GetSpecificRecordByUuid/:uuid"
+            url: baseUrls.cdrProcessor + "CallCDR/GetSpecificRecordByUuid/" + uuid
+        }).then(function (response) {
+            if (response.data && response.data.IsSuccess) {
+                return response;
+            } else {
+                return undefined;
+            }
+        });
+    };
+    //end of added_by_rushaid_12_01_2021
+
+
     var getAllTicketsByRequester = function (requester, page) {
         return $http({
             method: 'get',
@@ -909,6 +927,7 @@ agentApp.factory("ticketService", function ($http, baseUrls, authService) {
 
     return {
         GetAllTicketsByRequester: getAllTicketsByRequester,
+        getSpecificRecordByUuid: getSpecificRecordByUuid,
         SaveTicket: saveTicket,
         GetResourceIss: getResourceIss,
         getNewTickets: getNewTickets,
