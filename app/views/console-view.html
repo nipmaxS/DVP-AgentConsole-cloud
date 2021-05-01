@@ -496,6 +496,12 @@
                            class="icon-d-f-icon-mynote small-icon offline-phone" title="My Note [Ctrl+Alt+N]"></i>
                     </div>
                 </li>
+                <li ng-class="activeTab.viewType == 'MyNote'?'selected-tab':''" ng-show="accessNavigation.AGENT_NOTES">
+                    <div class="left-icon animated slideInLeft">
+                        <i ng-click="addVideCall();" class="icon-d-f-icon-mynote small-icon offline-phone"
+                            title="Vide Call"></i>
+                    </div>
+                </li>
                 <!-- ticket inbox -->
                 <li ng-show="accessNavigation.AGENT_TICKETINBOX">
                     <div class="left-icon animated slideInLeft">
@@ -736,6 +742,9 @@
                         </div>
                         <div ng-switch-when="MyNote">
                             <div ng-include="'app/views/myNote/my-remeider-note.html'"></div>
+                        </div>
+                        <div ng-switch-when="videoCall">
+                            <div ng-include="'app/views/videoCall/video-call-iframe.html'"></div>
                         </div>
                         <div ng-switch-when="new-profile">
                             <div
