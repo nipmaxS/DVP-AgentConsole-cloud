@@ -1069,6 +1069,8 @@ agentApp.controller('call_notifications_controller', function ($rootScope, $scop
             }
             showNotification(msg, 15000);
 
+            $scope.sayIt("you are receiving " + shared_data.callDetails.skill + " call");
+
             console.info("........................... Show Incoming call Notification Panel ........................... : " + shared_data.callDetails.number);
         },
         call_connected: function () {
