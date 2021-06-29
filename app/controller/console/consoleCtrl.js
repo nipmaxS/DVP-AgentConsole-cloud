@@ -4183,7 +4183,7 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
             });
             shared_data.previousModeOption = shared_data.currentModeOption;
 
-            if(shared_data.currentModeOption=='Outbound') {
+           // if(shared_data.currentModeOption=='Outbound') {
                 resourceService.RemoveSharing(authService.GetResourceId(), 'CALL').then(function (data) {
                     console.log('********REMOVE SHARING*********');
                     resourceService.BreakRequest(authService.GetResourceId(), requestOption).then(function (res) {
@@ -4220,9 +4220,9 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
                     authService.IsCheckResponse(error);
                     $scope.showAlert("Agent Task", "error", "Fail To remove sharing resource.");
                 });
-            }
+            //}
 
-            resourceService.BreakRequest(authService.GetResourceId(), requestOption).then(function (res) {
+           /* resourceService.BreakRequest(authService.GetResourceId(), requestOption).then(function (res) {
                 if (res.IsSuccess) {
                     $scope.currentBreak = requestOption;
                     $('#loginScreeen').removeClass('display-none').addClass('display-block');
@@ -4251,7 +4251,7 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
             }, function (error) {
                 authService.IsCheckResponse(error);
                 $scope.showAlert("Break Request", "error", "Fail To Register With " + requestOption);
-            });
+            });*/
         },
         endBreakOption: function (requestOption) {
             shared_data.userProfile = $scope.profile;
@@ -4275,26 +4275,32 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
                     }
                     console.log("MODE : "+shared_data.previousModeOption);
                     console.log("TASK : "+shared_data.previousTask);
-                    if(shared_data.previousModeOption=='Outbound'){
-                        userService.GetContactVeeryFormat().then(function (res) {
-                            if (res.IsSuccess) {
-                                resourceService.ChangeRegisterStatus(authService.GetResourceId(), shared_data.previousTask, res.Result, profileDataParser.myBusinessUnit).then(function (data) {
-                                    getCurrentState.getCurrentRegisterTask();
-                                    getCurrentState.breakState();
-                                    console.log("Outbound : "+ shared_data.previousModeOption);
-                                    $scope.modeOption.outboundOption('Outbound');
-                                    $scope.showAlert("Change Register", "success", "Register resource info success.");
-                                    $('#regStatusNone').removeClass('task-none').addClass('reg-status-done');
 
-                                })
-                            } else {
-                                console.log(data);
-                            }
-                        }, function (error) {
-                            authService.IsCheckResponse(error);
-                            $scope.showAlert("Change Register", "error", "Fail To Register..!");
-                        });
-                    }
+                    userService.GetContactVeeryFormat().then(function (res) {
+                        if (res.IsSuccess) {
+                            resourceService.ChangeRegisterStatus(authService.GetResourceId(), shared_data.previousTask, res.Result, profileDataParser.myBusinessUnit).then(function (data) {
+                                getCurrentState.getCurrentRegisterTask();
+                                getCurrentState.breakState();
+                                if(shared_data.previousModeOption=='Outbound') {
+                                    console.log("Outbound : " + shared_data.previousModeOption);
+                                    $scope.modeOption.outboundOption('Outbound');
+                                }
+                                else if(shared_data.previousModeOption=='Inbound'){
+                                    console.log("Inbound : " + shared_data.previousModeOption);
+                                    $scope.modeOption.inboundOption('Inbound');
+                                }
+                                $scope.showAlert("Change Register", "success", "Register resource info success.");
+                                $('#regStatusNone').removeClass('task-none').addClass('reg-status-done');
+
+                            })
+                        } else {
+                            console.log(data);
+                        }
+                    }, function (error) {
+                        authService.IsCheckResponse(error);
+                        $scope.showAlert("Change Register", "error", "Fail To Register..!");
+                    });
+
                     //chatService.Status('online', 'call');
                     $rootScope.$emit("execute_command", {
                         message: 'set_agent_status_available',
