@@ -313,6 +313,14 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
             $scope.addNewTicketInboxTemp();
         }
     });
+    hotkeys.add({
+        combo: 'ctrl+alt+c',
+        description: 'myCDRView',
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        callback: function () {
+            $scope.myCDRView();
+        }
+    });
 
     hotkeys.add({
         combo: 'ctrl+alt+n',
@@ -2520,6 +2528,10 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
     $scope.addNewTicketInboxTemp = function () {
         $('#consoleBody').addClass('disable-scroll');
         $scope.addTab('Ticket-Inbox', 'Ticket-Inbox', 'Ticket-Inbox', "Ticket-Inbox", "Ticket-Inbox");
+    };
+    $scope.myCDRView = function () {
+        $('#consoleBody').addClass('disable-scroll');
+        $scope.addTab('My-CDR', 'My-CDR', 'My-CDR', "My-CDR", "My-CDR");
     };
     $scope.openKnowladgePortal = function () {
         $('#consoleBody').addClass('disable-scroll');

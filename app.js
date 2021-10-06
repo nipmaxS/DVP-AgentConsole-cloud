@@ -15,7 +15,7 @@ var agentApp = angular.module('veeryAgentApp', ['ngRoute', 'ui', 'ui.bootstrap',
     'ui.bootstrap.datetimepicker', 'moment-picker',
     'angular.filter', 'satellizer', 'mdo-angular-cryptography',
     'ui.bootstrap.accordion', 'jsonFormatter', 'bw.paging',
-    'pubnub.angular.service', 'ui.slimscroll',
+    'pubnub.angular.service', 'ui.slimscroll', 'datatables',
     'ngImgCrop', 'jkAngularRatingStars', 'rzModule', "chart.js",
     'angular-carousel', 'ngEmbed', 'ngEmojiPicker', 'luegg.directives',
     'angularProgressbar', 'cp.ngConfirm', 'angucomplete-alt', 'as.sortable',
@@ -71,7 +71,9 @@ var baseUrls = {
     'ipMessageURL': 'http://ipmessagingservice.facetone.lk/',//'http://ipmessagingservice.app.veery.cloud',
     'templateUrl': 'http://templates.facetone.lk/DVP/API/1.0.0.0/', //dialerapi.facetone.lk
     'cdrProcessor': 'http://cdrprocessor.facetone.lk/DVP/API/1.0.0.0/', //dialerapi.facetone.lk
-    'articleServiceUrl': 'http://articleservice.facetone.lk/DVP/API/1.0.0.0/'
+    'articleServiceUrl': 'http://articleservice.facetone.lk/DVP/API/1.0.0.0/',
+    'resourceServiceBaseUrl': 'http://resourceservice.facetone.lk/DVP/API/1.0.0.0/ResourceManager/',//resourceservice.facetone.lk
+    'sipUserendpoint': 'http://sipuserendpointservice.facetone.lk/DVP/API/1.0.0.0/', //sipuserendpointservice.facetone.lk
 };
 
 // Config to validate initializing phone before putting call task 

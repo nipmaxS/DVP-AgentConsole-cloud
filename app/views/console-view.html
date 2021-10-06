@@ -504,6 +504,14 @@
                            title="Ticket Inbox [Ctrl+Alt+T]"></i>
                     </div>
                 </li>
+                <!-- My CDR -->
+                <li ng-show="accessNavigation.AGENT_TICKETINBOX">
+                    <div class="left-icon animated slideInLeft">
+                        <i ng-click="myCDRView()"
+                           class="icon-d-f-icon-mode small-icon offline-phone"
+                           title="My CDR [Ctrl+Alt+C]"></i>
+                    </div>
+                </li>
                 <!--<li ng-class="activeTab.viewType == 'filter'?'selected-tab':''">-->
                 <!--<div class="left-icon animated slideInLeft">-->
                 <!--<i ng-click="addNewTicketInboxTemp();"-->
@@ -745,6 +753,10 @@
                         <div ng-switch-when="Ticket-Inbox">
                             <!--<div ng-include="'app/views/ui-kit/inbox/inbox-console.html'"></div> -->
                             <div ng-include="'app/views/ticket/inbox/inbox-console.html'"></div>
+                        </div>
+                        <div ng-switch-when="My-CDR">
+                            <!--<div ng-include="'app/views/ui-kit/inbox/inbox-console.html'"></div> -->
+                            <div ng-include="'app/views/cdr/call-cdr.html'"></div>
                         </div>
                         <div ng-switch-when="Knowladge-Portal">
                             <!--<div ng-include="'app/views/ui-kit/inbox/inbox-console.html'"></div> -->

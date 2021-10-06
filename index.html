@@ -20,7 +20,21 @@
 
     <link type="text/css" href="bower_components/angular-json-tree/dist/angular-json-tree.css"/>
 
+    <!-- ng-sortable -->
+    <link rel="stylesheet" type="text/css" href="bower_components/chosen/chosen.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/ng-sortable/dist/ng-sortable.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/ng-sortable/dist/ng-sortable.style.css">
 
+    <!-- Datatables -->
+    <link href="assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <!--<link href="assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">-->
+    <link href="assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <!--<link href="assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">-->
+    <!--<link href="assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" type="text/css" href="bower_components/angular-datatables/dist/css/angular-datatables.css">
+
+    <link href="assets/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="bower_components/ng-img-crop/compile/minified/ng-img-crop.css">
     <script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
 
@@ -180,6 +194,7 @@
     <script type="text/javascript" src="app/controller/console/consoleCtrl.js"></script>
     <script type="text/javascript" src="app/controller/console/newProfileCtrl.js"></script>
     <script type="text/javascript" src="app/controller/ticket/ticketController.js"></script>
+    <script type="text/javascript" src="app/controller/cdr/cdrCtrl.js"></script>
 
 
     <!-- mail inbox -->
@@ -302,6 +317,11 @@
 <div ui-view></div>
 </body>
 
+<!-- Datatables -->
+<script src="assets/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="bower_components/ng-sortable/dist/ng-sortable.min.js"></script>
+<script src="bower_components/angular-datatables/dist/angular-datatables.min.js"></script>
 
 <!-- directive -->
 <script type="text/javascript" src="app/directive/engagementTabDirective.js"></script>
@@ -471,6 +491,9 @@
 <!--Knowladge Portal -->
 <script type="text/javascript" src="app/controller/knowladge-portal/knowladgePortalController.js"></script>
 <script type="text/javascript" src="app/services/knowladge-portal/knowladgePortalService.js"></script>
+
+<!--My CDR -->
+<script type="text/javascript" src="app/controller/cdr/cdrCtrl.js"></script>
 
 <!--New Agent Ticket -->
 <script type="text/javascript" src="app/controller/ticket/addNewAgentTicket.js"></script>
