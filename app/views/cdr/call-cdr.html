@@ -276,10 +276,10 @@
     <button ng-click="xx()"></button>-->
 
     <div class="videogular-container audio">
-        <videogular vg-auto-play="true" vg-player-ready="onPlayerReady($API)">
+        <videogular id="noContextMenu" vg-auto-play="true" vg-player-ready="onPlayerReady($API)">
             <vg-media vg-src="config.sources"
                       vg-tracks="config.tracks"
-                      vg-native-controls="false" vg-type="audio">
+                      vg-native-controls="true" vg-type="audio">
             </vg-media>
         </videogular>
     </div>
@@ -366,6 +366,11 @@
         showInputs: false,
         minuteStep: 5
     });
+    const noContext = document.getElementById('noContextMenu');
+
+    noContext.addEventListener('contextmenu', e => {
+        e.preventDefault();
+    })
 
 </script>
 
