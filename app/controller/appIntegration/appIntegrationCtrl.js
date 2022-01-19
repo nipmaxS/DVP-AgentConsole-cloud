@@ -79,27 +79,29 @@ agentApp.controller('appIntegrationCtrl', function ($scope, authService, integra
                     $scope.showAlert('App Integration', 'error', 'Error calling third party API');
                     $scope.appConfig[appID].isTableLoading = false;
                 }
-                else if(!(response.ApiResponse instanceof Array)){
-                        $scope.showAlert('App Integration', 'error', 'API returned data are not in the expected format');
-                        $scope.appConfig[appID].isTableLoading = false;
-                        }
+                    //else if(!(response.ApiResponse instanceof Array)){
+                    // $scope.showAlert('App Integration', 'error', 'API returned data are not in the expected format');
+                    // $scope.appConfig[appID].isTableLoading = false;
+                // }
                 else{
+                    if(response.Success == true){
+                        $scope.showAlert('App Integration', 'success', 'Success calling third party API');
+                    }
                     _tempData = response.ApiResponse.map(function (el) {
                         var o = Object.assign({}, el);
                         o._isSelected = false; // a status need to maintain
                         return o;
                     });
                     $scope.appConfig[appID] = { "appID": appID,
-                                                "defaultIntegrationID":defaultIntegrationID,
-                                                "data": _tempData,
-                                                "actions": $scope.apps[currAppPosition].actions,
-                                                "header": Object.keys(_tempData[0]),
-                                                "isTableLoading": false
+                        "defaultIntegrationID":defaultIntegrationID,
+                        "data": _tempData,
+                        "actions": $scope.apps[currAppPosition].actions,
+                        "header": Object.keys(_tempData[0]),
+                        "isTableLoading": false
                     };
                 }
             });
         }
-
 
     };
 
