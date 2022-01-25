@@ -266,34 +266,52 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                 return scope.userAccessFields[field].editable;
             };
 
-            scope.editDispositionMode = function () {
-                document.getElementById("dispositionTagSel").disabled=false;
-                console.error('start scope.editDispositionSt ' + scope.editDispositionSt);
-                if (!scope.editDispositionSt) {
-                    engagementService.listDispositionTags().then(function (response) {
-                        console.log("Load Disposition Tags response " + JSON.stringify(response));
+            // scope.editDispositionMode = function () {
 
-                        if (response && response.IsSuccess) {
-                            response.Result.forEach(function(dispositionTagOption) {
-                                if (dispositionTagOption.active == true) {
-                                    scope.dispositionTagOptions.push(dispositionTagOption.tag);
-                                }
-                            });
-                            console.log("Load Disposition Tags successfully " + JSON.stringify(scope.dispositionTagOptions));
-                            scope.editDispositionSt = !scope.editDispositionSt;
-                        } else {
-                            console.error('Fail To Load Disposition Tags');
-                            scope.showAlert('Load Disposition Tags', 'error', 'Fail To Load Disposition Tags');
-                        }
-                    }, function (err) {
-                        console.error('Fail To Load Disposition Tags ' + err);
-                        scope.showAlert('Load Disposition Tags', 'error', 'Fail To Load Disposition Tags');
-                    });
-                }
-                else {
-                    scope.editDispositionSt = !scope.editDispositionSt;
-                }
-            };
+            //     ivrService.GetIvrDetailsByEngagementId(scope.sessionId).then(function (response) {
+            //         try {
+
+            //             if(response==null || response=="" ){
+            //                 document.getElementById("dispositionTagSel").disabled=true;                        
+            //                 scope.showAlert("Disposition Tag", "error", "Cannot edit without Engagement Session")
+            //             }else{
+            //                 document.getElementById("dispositionTagSel").disabled=false;
+            //             }
+            //         }
+            //         catch (ex) {
+            //             console.log(ex);
+            //         }
+
+            //     }, function (err) {
+            //         scope.showAlert("Engagement Session Note", "error", "Fail To Get Engagement Session Note.")
+            //     });
+
+            //     console.error('start scope.editDispositionSt ' + scope.editDispositionSt);
+            //     if (!scope.editDispositionSt) {
+            //         engagementService.listDispositionTags().then(function (response) {
+            //             console.log("Load Disposition Tags response " + JSON.stringify(response));
+
+            //             if (response && response.IsSuccess) {
+            //                 response.Result.forEach(function(dispositionTagOption) {
+            //                     if (dispositionTagOption.active == true) {
+            //                         scope.dispositionTagOptions.push(dispositionTagOption.tag);
+            //                     }
+            //                 });
+            //                 console.log("Load Disposition Tags successfully " + JSON.stringify(scope.dispositionTagOptions));
+            //                 scope.editDispositionSt = !scope.editDispositionSt;
+            //             } else {
+            //                 console.error('Fail To Load Disposition Tags');
+            //                 scope.showAlert('Load Disposition Tags', 'error', 'Fail To Load Disposition Tags');
+            //             }
+            //         }, function (err) {
+            //             console.error('Fail To Load Disposition Tags ' + err);
+            //             scope.showAlert('Load Disposition Tags', 'error', 'Fail To Load Disposition Tags');
+            //         });
+            //     }
+            //     else {
+            //         scope.editDispositionSt = !scope.editDispositionSt;
+            //     }
+            // };
 
             scope.upsertDispositionTag = function (dispositionTag) {
 
@@ -1774,6 +1792,30 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
             scope.isInitail = true;
             scope.isTimelineDisabled=true;
             scope.GetEngagementIdsByProfile = function (profileId) {
+
+                scope.editDispositionSt = false;
+                scope.dispositionTag = null;
+                scope.dispositionTagOptions = [];
+
+                engagementService.listDispositionTags().then(function (response) {
+                    console.log("Load Disposition Tags response " + JSON.stringify(response));
+
+                    if (response && response.IsSuccess) {
+                        response.Result.forEach(function(dispositionTagOption) {
+                            if (dispositionTagOption.active == true) {
+                                scope.dispositionTagOptions.push(dispositionTagOption.tag);
+                            }
+                        });
+                        console.log("Load Disposition Tags successfully " + JSON.stringify(scope.dispositionTagOptions));
+                        scope.editDispositionSt = !scope.editDispositionSt;
+                    } else {
+                        console.error('Fail To Load Disposition Tags');
+                        scope.showAlert('Load Disposition Tags', 'error', 'Fail To Load Disposition Tags');
+                    }
+                }, function (err) {
+                    console.error('Fail To Load Disposition Tags ' + err);
+                    scope.showAlert('Load Disposition Tags', 'error', 'Fail To Load Disposition Tags');
+                });
 
                 var qParams =[];
                 var isValidDates=true;
