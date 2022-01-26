@@ -317,26 +317,43 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
 
                 scope.dispositionTag = dispositionTag;
                 console.log("Saving Disposition Tag "+scope.dispositionTag);
-                if (scope.dispositionTag != null) {
-                    engagementService.upsertEngagementDispositionTag(scope.sessionId, scope.dispositionTag).then(function (response) {
 
-                        if (response && response.IsSuccess) {
-                            console.log("Disposition Tag "+scope.dispositionTag + ' Saved successfully for engagement id ' + scope.sessionId);
-                            scope.showAlert('Disposition Tag', 'success', 'Disposition Tag Saved successfully');
-                            // scope.editDispositionMode();
-                            document.getElementById("dispositionTagSel").disabled=true;
-                        } else {
-                            console.error("Disposition Tag "+scope.dispositionTag + ' Saving Failed for engagement id ' + scope.sessionId);
-                            scope.showAlert('Disposition Tag', 'error', 'Fail To Save Disposition Tag');
+                //obtaining ivr details to check if a call is taken before updating tag
+                ivrService.GetIvrDetailsByEngagementId(scope.sessionId).then(function (response) {
+                    try {
+                        if(response==null || response=='' || response=="" ){
+                            console.log("-----------inside try if---------");
+                            scope.showAlert("Disposition Tag", "error", "Cannot edit without Engagement Session")
+                        }else{
+                            console.log("-----------inside try else---------");
+                            if (scope.dispositionTag != null) {
+                                engagementService.upsertEngagementDispositionTag(scope.sessionId, scope.dispositionTag).then(function (response) {
+
+                                    if (response && response.IsSuccess) {
+                                        console.log("Disposition Tag "+scope.dispositionTag + ' Saved successfully for engagement id ' + scope.sessionId);
+                                        scope.showAlert('Disposition Tag', 'success', 'Disposition Tag Saved successfully');
+                                        // scope.editDispositionMode();
+                                        document.getElementById("dispositionTagSel").disabled=true;
+                                    } else {
+                                        console.error("Disposition Tag "+scope.dispositionTag + ' Saving Failed for engagement id ' + scope.sessionId);
+                                        scope.showAlert('Disposition Tag', 'error', 'Fail To Save Disposition Tag');
+                                    }
+                                }, function (err) {
+                                    console.error("Disposition Tag "+scope.dispositionTag + ' Saving Failed for engagement id ' + scope.sessionId + ' error : ' + err);
+                                    scope.showAlert('Disposition Tag', 'error', 'Fail To Save Disposition Tag');
+                                });
+                            }
+                            else {
+                                console.error("Disposition Tag is EMPTY!!!")
+                            }
                         }
-                    }, function (err) {
-                        console.error("Disposition Tag "+scope.dispositionTag + ' Saving Failed for engagement id ' + scope.sessionId + ' error : ' + err);
-                        scope.showAlert('Disposition Tag', 'error', 'Fail To Save Disposition Tag');
-                    });
-                }
-                else {
-                    console.error("Disposition Tag is EMPTY!!!")
-                }
+                    }
+                    catch (ex) {
+                        console.log(ex);
+                    }
+                }, function (err) {
+                    scope.showAlert("Engagement Session Note", "error", "Fail To Get Engagement Session Note.")
+                });
             };
 
             //--------------- shortcuts ----------------------------------
