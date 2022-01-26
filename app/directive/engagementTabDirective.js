@@ -333,7 +333,7 @@ agentApp.directive("engagementTab", function ($filter, $rootScope, $uibModal, $q
                                         console.log("Disposition Tag "+scope.dispositionTag + ' Saved successfully for engagement id ' + scope.sessionId);
                                         scope.showAlert('Disposition Tag', 'success', 'Disposition Tag Saved successfully');
                                         // scope.editDispositionMode();
-                                        document.getElementById("dispositionTagSel").disabled=true;
+                                        
                                     } else {
                                         console.error("Disposition Tag "+scope.dispositionTag + ' Saving Failed for engagement id ' + scope.sessionId);
                                         scope.showAlert('Disposition Tag', 'error', 'Fail To Save Disposition Tag');
