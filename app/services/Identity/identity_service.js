@@ -96,7 +96,7 @@
         //logoff
         function Logoff(callback) {
             var decodeToken = getTokenDecode();
-            $http.delete(baseUrls.authServiceBaseUrl + '/oauth/token/revoke/' + decodeToken.jti, {
+            $http.delete(baseUrls.authServiceBaseUrl + 'oauth/token/revoke/' + decodeToken.jti, {
                 headers: {
                     Authorization: 'Bearer ' + getToken()
                 }
