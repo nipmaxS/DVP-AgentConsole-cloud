@@ -2453,8 +2453,13 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
                                             sessionId: sessionId,
                                             displayName: reply.channel_from
                                         };
+                                        if(notifyData.direction === 'outbound' && notifyData.skill !== 'OUTBOUND') {
+                                            $scope.addTab('Engagement - ' + reply.channel_to, 'Engagement', 'engagement', notifyData, sessionId);
+                                        }
+                                        else{
+                                            $scope.addTab('Engagement - ' + reply.channel_from, 'Engagement', 'engagement', notifyData, sessionId);
+                                        }
 
-                                        $scope.addTab('Engagement - ' + reply.channel_from, 'Engagement', 'engagement', notifyData, sessionId);
                                     } else {
                                         $scope.showAlert("Get Engagement Sessions", "error", "Fail To Get Engagement Sessions Data.");
                                     }
