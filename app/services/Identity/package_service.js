@@ -21,7 +21,7 @@ agentApp.factory('package_service', function ($http,baseUrls) {
        pickCompanyInfo : function (tenant, company) {
            return $http({
                method: 'GET',
-               url: baseUrls.packageServiceBaseUrl + "Organisation/Name/" + tenant + "/" + company
+               url: baseUrls.organizationServiceBaseUrl + "Organisation/Name/" + tenant + "/" + company
            }).then(function (response) {
                return response;
            });
