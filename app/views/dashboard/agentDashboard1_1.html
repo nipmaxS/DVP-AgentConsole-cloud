@@ -34,7 +34,7 @@
                 <section class="d-widget-w d-call-summary">
                     <div class="d-call-s-wrap05201">
                         <div class="row">
-                            <!-- on call time -->
+                            <!-- on call time inbound -->
                             <div class="col-lg-6">
                                 <div class="d-call-count-w">
                                     <div class="d-c-count animated slideInDown">
@@ -49,14 +49,14 @@
                                 </div>
                             </div>
 
-                            <!-- Time - outbound-->
+                            <!-- on call time outbound -->
                             <div class="col-lg-6">
                                 <div class="d-call-count-w">
                                     <div class="d-c-count animated slideInDown">
-                                        {{productivity.OutboundTime| date:'HH:mm:ss'}}
+                                        {{productivity.OutboundCallTime| date:'HH:mm:ss'}}
                                     </div>
                                     <div class="d-c-name">
-                                        On Mode Time
+                                        On Call Time
                                     </div>
                                     <div class="d-c-type outbound">
                                         outbound
@@ -96,19 +96,19 @@
                         </div>
 
                         <div class="row">
-                            <!-- Staffed time -->
+                            <!-- Staff time -->
                             <div class="col-lg-6">
                                 <div class="d-call-count-w">
                                     <div class="d-c-count animated slideInDown">
                                         {{productivity.StaffedTime| date:'HH:mm:ss'}}
                                     </div>
                                     <div class="d-c-name">
-                                        Staffed Time
+                                        Staff Time
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- break type -->
+                            <!-- Break type -->
                             <div class="col-lg-6">
                                 <div class="d-call-count-w">
                                     <div class="d-c-count animated slideInDown">
@@ -144,66 +144,34 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- call performance -->
-                    <div class="d-call-performance05201">
-                        <header class="w-inside-h">
-                            Summary
-                        </header>
-
-                        <div class="d-performance-wrapper">
-                            <div class="col-lg-4 nopadding">
-                                <div class="row">
-                                    <div class="d-p-s-count d-w-boarder-left">
-                                        <div class="d-p-s-value">
-                                            {{agentPerformance.TotalRejectCount | number:0}}%
-                                            <div class="d-performance-status up"
-                                                 ng-class="isCheckPerfomance(agentPerformance.TotalRejectCount) ?'up':'down'">
-                                                <i class="ti-arrow-up"></i>
-                                                <i class="ti-arrow-down"></i>
-                                            </div>
-                                        </div>
-                                        <div class="d-p-s-header">
-                                            Rejected
-                                        </div>
+                        <div class="row">
+                            <!-- Time - inbound-->
+                            <div class="col-lg-6">
+                                <div class="d-call-count-w">
+                                    <div class="d-c-count animated slideInDown">
+                                        {{productivity.InboundTime| date:'HH:mm:ss'}}
+                                    </div>
+                                    <div class="d-c-name">
+                                        On Mode Time
+                                    </div>
+                                    <div class="d-c-type inbound">
+                                        inbound
                                     </div>
                                 </div>
                             </div>
 
-
-                            <div class="col-lg-4 nopadding">
-                                <div class="row">
-                                    <div class="d-p-s-count d-w-boarder-left">
-                                        <div class="d-p-s-value ">
-                                            {{agentPerformance.OnCallTime | number:0}}%
-                                            <div class="d-performance-status"
-                                                 ng-class="isCheckPerfomance(agentPerformance.OnCallTime)?'up':'down'">
-                                                <i class="ti-arrow-up"></i>
-                                                <i class="ti-arrow-down "></i>
-                                            </div>
-                                        </div>
-                                        <div class="d-p-s-header">
-                                            On Call Time
-                                        </div>
+                            <!-- Time - outbound-->
+                            <div class="col-lg-6">
+                                <div class="d-call-count-w">
+                                    <div class="d-c-count animated slideInDown">
+                                        {{productivity.OutboundTime| date:'HH:mm:ss'}}
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4">
-                                <div class="row">
-                                    <div class="d-p-s-count">
-                                        <div class="d-p-s-value">
-                                            {{agentPerformance.TotalAnswered | number:0}}%
-                                            <div class="d-performance-status"
-                                                 ng-class="isCheckPerfomance(agentPerformance.TotalAnswered) ?'up':'down'">
-                                                <i class="ti-arrow-up"></i>
-                                                <i class="ti-arrow-down"></i>
-                                            </div>
-                                        </div>
-                                        <div class="d-p-s-header">
-                                            Answered
-                                        </div>
+                                    <div class="d-c-name">
+                                        On Mode Time
+                                    </div>
+                                    <div class="d-c-type outbound">
+                                        outbound
                                     </div>
                                 </div>
                             </div>
