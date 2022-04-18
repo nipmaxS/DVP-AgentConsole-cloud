@@ -1121,7 +1121,6 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope,$q, $
 
     $scope.openTicketView = function (_viewType, _selectedViewObj, selectedFilter, page, clickEvent) {
         $scope.showticketview = 'app/views/ticket/inbox/template/inbox-list-view.html';
-        $scope.ticketList = [];
         $scope.currentSelected.name = _viewType;
         $scope.currentSelected.totalCount = _selectedViewObj;
         $scope.isFilter = false;
@@ -1269,15 +1268,15 @@ agentApp.controller('ticketInboxConsoleCtrl', function ($scope, $rootScope,$q, $
                 inboxPrivateFunction.picketTicketInboxList(page, qString, 'TicketsCollaboratedByMe');
                 break;
 
-            case'openvm':
-                $scope.currentSelected.name = 'Voicemail - Open';
+            case'Voicemail - Open':
+                //$scope.currentSelected.name = 'Voicemail - Open';
                 $scope.showticketview = 'app/views/ticket/inbox/template/inbox-voicemaillist-view.html';
                 //inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed', 'TicketsCollaboratedByMe');
                 inboxPrivateFunction.picketTicketInboxList(page, 'status=new&status=listened', 'openvm');
                 break;
 
-            case'closedvm':
-                $scope.currentSelected.name = 'Voicemail - Closed';
+            case'Voicemail - Closed':
+                //$scope.currentSelected.name = 'closedvm';
                 $scope.showticketview = 'app/views/ticket/inbox/template/inbox-voicemaillist-view.html';
                 //inboxPrivateFunction.picketTicketInboxList(page, 'parked&status=solved&status=closed', 'TicketsCollaboratedByMe');
                 inboxPrivateFunction.picketTicketInboxList(page, 'status=closed', 'closedvm');
