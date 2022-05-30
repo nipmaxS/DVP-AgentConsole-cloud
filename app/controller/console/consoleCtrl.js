@@ -2004,7 +2004,7 @@ agentApp.controller('consoleCtrl', function ($window, $filter, $rootScope, $scop
             index++;
             if(index<=pageCount)
             {
-                $scope.loadUserRec(i,pageCount, callback);
+                $scope.loadUserRec(index,pageCount, callback);
             }
             else{
                 callback(tempUsrList);
